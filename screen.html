@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="">
+  <meta name="x5-orientation" content="portrait">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta itemprop="name" content="try"/>
+  <meta name="description" itemprop="description" content="trackpad" />
+  <meta name="keywords" content="trackpad">
+  <title>try</title>
+</head>
+<body style="height:100%;overflow:hidden">
+  <div id="main" style="width:100%;height:100%;position:fixed;top:0;left:0;">
+    <div id="msg">
+    </div>
+  </div>
+  <script>
+
+// 打开一个WebSocket:
+
+var point = document.createElement('div');
+point.setAttribute('style',  "position:fixed;width:5px;height:5px;background-color:#000;left:0px;top:0px;")
+
+document.getElementsByTagName('body')[0].appendChild(point);
+
+let ws = new WebSocket('ws://10.13.131.182:3001');
+
+// 打开WebSocket连接后立刻发送一条消息:
+ws.addEventListener('open', function () {
+    console.log(`[CLIENT] open()`);
+    ws.send('Hello!');
+});
+
+// 响应收到的消息:
+ws.addEventListener('message', function (message) {
+    console.log(`[CLIENT] Received: ${message}`);
+    console.log(message.data)
+    var arr = message.data.split(',');
+    set(arr[0], arr[1])
+})
+
+function set(x, y) {
+  console.log(x, y)
+  point.style.left = x + 'px';
+  point.style.top = y + 'px';
+}
+
+
+  </script>
+</body>
+</html>
