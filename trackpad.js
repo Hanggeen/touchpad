@@ -1,13 +1,10 @@
-
-
 // 打开一个WebSocket:
-
 var point = document.createElement('div');
 point.setAttribute('style',  "position:fixed;width:5px;height:5px;background-color:#000;left:0px;top:0px;")
 
 document.getElementsByTagName('body')[0].appendChild(point);
 
-let ws = new WebSocket('ws://172.20.10.3:3000');
+let ws = new WebSocket('ws://127.0.0.1:3000');
 
 // 打开WebSocket连接后立刻发送一条消息:
 ws.addEventListener('open', function () {
