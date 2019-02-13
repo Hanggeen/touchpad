@@ -1,39 +1,132 @@
 // 打开一个WebSocket:
-var point = document.createElement('div');
-point.setAttribute('style',  "position:fixed;width:5px;height:5px;background-color:#000;left:0px;top:0px;")
+let ws = new WebSocket("ws://10.13.131.182:3000");
 
-document.getElementsByTagName('body')[0].appendChild(point);
-
-let ws = new WebSocket('ws://127.0.0.1:3000');
+let CODE = "first";
 
 // 打开WebSocket连接后立刻发送一条消息:
-ws.addEventListener('open', function () {
-    ws.send(JSON.stringify({
-      type: 'init-listener',
-      data: 'first'
-    }));
+ws.addEventListener("open", function() {
+  ws.send(
+    JSON.stringify({
+      type: "init-poster",
+      data: CODE
+    })
+  );
 });
 
-var X = 0, Y = 0;
 // 响应收到的消息:
-ws.addEventListener('message', function (message) {
-    console.log(`收到消息: ${message.data}`);
-    var msg = JSON.parse(message.data);
-    if (msg.action == 'slide') {
-      set(msg.data.x, msg.data.y);
-    }
-    if (msg.action == 'click') {
-      console.log(Math.floor(X), Math.floor(Y))
-      console.log(document.elementFromPoint(Math.floor(X), Math.floor(Y)))
-      document.elementFromPoint(Math.floor(X)-6, Math.floor(Y)-6).click()
-    }
-})
+ws.addEventListener("message", function(msg) {
+  showTips(JSON.parse(msg).msg)
+});
 
-function set(x, y) {
-  console.log(x, y)
-  X += x;
-  Y += y;
-  point.style.left = X + 'px';
-  point.style.top = Y + 'px';
+
+
+var padDom = document.getElementById("pad");
+
+var padStartX = 0,
+  padStartY = 0;
+
+padDom.addEventListener("touchstart", function(e) {
+  padStartX = e.touches[0].pageX;
+  padStartY = e.touches[0].pageY;
+});
+padDom.addEventListener("touchmove", function(e) {
+    var X, Y;
+    X = e.touches[0].pageX - padStartX;
+    Y = e.touches[0].pageY - padStartY;
+    padStartX = e.touches[0].pageX;
+    padStartY = e.touches[0].pageY;
+    mousemove(X, Y);
+  },
+  false
+);
+padDom.addEventListener("touchend", function(e) {});
+
+
+
+
+
+var barDom = document.getElementById("bar");
+
+var barStartX = 0,
+  barStartY = 0;
+
+barDom.addEventListener("touchstart", function(e) {
+  barStartX = e.touches[0].pageX;
+  barStartY = e.touches[0].pageY;
+});
+barDom.addEventListener("touchmove", function(e) {
+    var X, Y;
+    X = e.touches[0].pageX - barStartX;
+    Y = e.touches[0].pageY - barStartY;
+    barStartX = e.touches[0].pageX;
+    barStartY = e.touches[0].pageY;
+    scroll(X, Y);
+  },
+  false
+);
+barDom.addEventListener("touchend", function(e) {});
+
+
+
+
+
+
+
+
+padDom.addEventListener("click", function(e) {
+  sendClick();
+});
+
+
+
+
+
+function mousemove(x, y) {
+  ws.send(
+    JSON.stringify({
+      type: "post",
+      code: CODE,
+      action: "slide",
+      data: {
+        x: x,
+        y: y
+      }
+    })
+  );
 }
 
+
+function scroll(x, y) {
+  ws.send(
+    JSON.stringify({
+      type: "post",
+      code: CODE,
+      action: "scroll",
+      data: {
+        x: x,
+        y: y
+      }
+    })
+  );
+}
+
+
+function sendClick() {
+  ws.send(
+    JSON.stringify({
+      type: "post",
+      code: CODE,
+      action: "click",
+      data: {}
+    })
+  );
+}
+
+function showTips(text) {
+  document.getElementById("tips").innerHTML = text;
+  document.getElementById("tips").classList.remove("hide");
+  clearTimeout(window.tipsTimeout);
+  window.tipsTimeout = setTimeout(function() {
+    document.getElementById("tips").classList.add("hide");
+  }, 2000);
+}
