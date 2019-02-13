@@ -12,7 +12,7 @@
   <meta content="email=no" name="format-detection">
   <meta itemprop="name" content="try"/>
   <meta name="description" itemprop="description" content="trackpad" />
-  <meta name="keywords" content="trackpad">
+  <meta name="keywords" content="trackpad"><meta name="msapplication-tap-highlight" content="no" />
   <title>pad</title>
   <style>
   html,body {
@@ -57,20 +57,20 @@
     width: 100%;
     height: 10%;
   }
-  #mouse {
+  #mouse,#gesture {
     position: absolute;
     top: 0;
-    left: 0;
     width: 50%;
     height: 100%;
+    padding-top: 3%;
+    text-align: center;
+  }
+  #mouse {
+    left: 0;
     background-color: #bbb;
   }
   #gesture {
-    position: absolute;
-    top: 0;
     right: 0;
-    width: 50%;
-    height: 100%;
     background-color: #ccc;
   }
   #tips {
@@ -100,10 +100,11 @@
     <div id="pad"></div>
     <div id="bar"></div>
     <div class="footer">
-      <div id="mouse"></div>
-      <div id="gesture"></div>
+      <div id="mouse">鼠标</div>
+      <div id="gesture">手势</div>
     </div>
   </div>
+  <script src="./hammer.min.js"></script>
   <script src="./trackpad.js"></script>
 </body>
 </html>
