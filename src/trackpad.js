@@ -1,141 +1,68 @@
-// 打开一个WebSocket:
-var ws = new WebSocket("ws://10.13.131.182:3000");
+function getQueryString(name) { 
+	var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+	var r = window.location.search.substr(1).match(reg); 
+	if (r != null) return unescape(r[2]); return null; 
+} 
 
-var CODE = "first";
-var MODE = 'gesture'
-var padDom = document.getElementById("pad");
-var barDom = document.getElementById("bar");
-var mouseDom = document.getElementById("mouse");
-var gestureDom = document.getElementById("gesture");
-
-var padStartX = 0, padStartY = 0;
-var barStartX = 0, barStartY = 0;
-
-var hammertime = new Hammer(padDom, {});
-
-// 打开WebSocket连接后立刻发送一条消息:
-ws.addEventListener("open", function() {
-  ws.send(
-    JSON.stringify({
-      type: "init-poster",
-      data: CODE
-    })
-  );
-});
-
-// 响应收到的消息:
-ws.addEventListener("message", function(msg) {
-  showTips(JSON.parse(msg.data).msg)
-});
-
-
-mouseDom.onclick = function () {
-  MODE = 'mouse'
-  gestureDom.classList.remove('active')
-  mouseDom.classList.add('active')
-  init()
-}
-gestureDom.onclick = function () {
-  MODE = 'gesture'
-  gestureDom.classList.add('active')
-  mouseDom.classList.remove('active')
-  init()
+function sendMessage (action, data = null) {
+  ws.send(JSON.stringify({
+    type: "post",
+    code: CODE,
+    action: action,
+    data: data
+  }))
 }
 
-
-// 发送事件系列
-
-function sendMouseMove(x, y) {
-  ws.send(
-    JSON.stringify({
-      type: "post",
-      code: CODE,
-      action: "slide",
-      data: {
-        x: x,
-        y: y
-      }
-    })
-  );
-}
-
-function sendScroll(x, y) {
-  ws.send(
-    JSON.stringify({
-      type: "post",
-      code: CODE,
-      action: "scroll",
-      data: {
-        x: x,
-        y: y
-      }
-    })
-  );
-}
-
-function sendClick() {
-  ws.send(
-    JSON.stringify({
-      type: "post",
-      code: CODE,
-      action: "click",
-      data: {}
-    })
-  );
-}
-
-function sendSwipe(side) {
-  ws.send(
-    JSON.stringify({
-      type: "post",
-      code: CODE,
-      action: "swipe",
-      data: side
-    })
-  );
+var eventHandler = {
+  barTouchStart: function (e) {
+    barStartX = e.touches[0].pageX;
+    barStartY = e.touches[0].pageY;
+  },
+  barTouchMove: function(e) {
+    showTips('滑动滚轮');
+    var X, Y;
+    X = e.touches[0].pageX - barStartX;
+    Y = e.touches[0].pageY - barStartY;
+    barStartX = e.touches[0].pageX;
+    barStartY = e.touches[0].pageY;
+    sendMessage('scroll', {x: X, y: Y});
+  },
+  padTouchStart: function (e) {
+    e.preventDefault()
+    padStartX = e.touches[0].pageX;
+    padStartY = e.touches[0].pageY;
+  },
+  padTouchMove: function (e) {
+    showTips('滑动光标');
+    var X, Y;
+    X = e.touches[0].pageX - padStartX;
+    Y = e.touches[0].pageY - padStartY;
+    padStartX = e.touches[0].pageX;
+    padStartY = e.touches[0].pageY;
+    sendMessage('slide', {x:X, y:Y})
+  },
+  padClick: function() {
+    sendMessage('click')
+  },
+  swipeLeft: function(ev) {
+    sendMessage('swipe', 'left');
+    showTips('向左滑动');
+  },
+  swipeRight: function (ev) {
+    sendMessage('swipe', 'right');
+    showTips('向右滑动');
+  },
+  swipeUp: function(ev) {
+    sendMessage('swipe', 'up');
+    showTips('向上滑动');
+  },
+  swipeDown: function(ev) {
+    sendMessage('swipe', 'down');
+    showTips('向下滑动');
+  }
 }
 
 
-// 触发事件系列
-function padTouchStart(e) {
-  e.preventDefault()
-  padStartX = e.touches[0].pageX;
-  padStartY = e.touches[0].pageY;
-}
-
-function padTouchMove (e) {
-  showTips('滑动光标');
-  var X, Y;
-  X = e.touches[0].pageX - padStartX;
-  Y = e.touches[0].pageY - padStartY;
-  padStartX = e.touches[0].pageX;
-  padStartY = e.touches[0].pageY;
-  sendMouseMove(X, Y);
-}
-
-function padClick() {
-  sendClick()
-}
-
-function swipeLeft(ev) {
-  sendSwipe('left');
-  showTips('向左滑动');
-}
-
-function swipeRight(ev) {
-  sendSwipe('right');
-  showTips('向右滑动');
-}
-
-function swipeUp(ev) {
-  sendSwipe('up');
-  showTips('向上滑动');
-}
-
-function swipeDown(ev) {
-  sendSwipe('down');
-  showTips('向下滑动');
-}
 
 // 公用
 function showTips(text) {
@@ -150,41 +77,85 @@ function showTips(text) {
 
 
 
-// 滚动条添加事件
-barDom.addEventListener("touchstart", function(e) {
-  barStartX = e.touches[0].pageX;
-  barStartY = e.touches[0].pageY;
+// 打开一个WebSocket:
+var ws = new WebSocket("ws://" + getQueryString('ws'));
+
+var CODE = "first";
+var MODE = 'mouse'
+
+var padDom = document.getElementById("pad");
+var barDom = document.getElementById("bar");
+var mouseDom = document.getElementById("mouse");
+var gestureDom = document.getElementById("gesture");
+var gesturePadDom = document.getElementById("gesturearea")
+var mousePadDom = document.getElementById("mousearea")
+
+var padStartX = 0, padStartY = 0;
+var barStartX = 0, barStartY = 0;
+
+var padDomHammer = new Hammer(padDom, {});
+var gestureDomHammer = new Hammer(gesturePadDom, {});
+gestureDomHammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+
+// 打开WebSocket连接后立刻发送一条消息:
+ws.addEventListener("open", function() {
+  sendMessage('init-poster', CODE)
 });
-barDom.addEventListener("touchmove", function(e) {
-    showTips('滑动滚轮');
-    var X, Y;
-    X = e.touches[0].pageX - barStartX;
-    Y = e.touches[0].pageY - barStartY;
-    barStartX = e.touches[0].pageX;
-    barStartY = e.touches[0].pageY;
-    sendScroll(X, Y);
-  },
-  false
-);
+
+// 响应收到的消息:
+ws.addEventListener("message", function(msg) {
+  showTips(JSON.parse(msg.data).msg)
+});
+
+
+mouseDom.onclick = function () {
+  MODE = 'mouse'
+  gestureDom.classList.remove('active')
+  mouseDom.classList.add('active')
+  mousePadDom.style.display = 'flex';
+  gesturePadDom.style.display = 'none';
+}
+gestureDom.onclick = function () {
+  MODE = 'gesture'
+  gestureDom.classList.add('active')
+  mouseDom.classList.remove('active')
+  mousePadDom.style.display = 'none';
+  gesturePadDom.style.display = 'flex';
+}
 
 function init () {
   if (MODE == 'mouse') {
-    hammertime.stop()
-    padDom.addEventListener("touchstart", padTouchStart);
-    padDom.addEventListener("touchmove", padTouchMove);
-    hammertime.on('tap', padClick);
-    hammertime.off('swipeleft', swipeLeft);
-    hammertime.off('swiperight', swipeRight);
-    hammertime.off('swipeup', swipeUp);
-    hammertime.off('swipedown', swipeDown);    
-  } else {
-    padDom.removeEventListener("touchstart", padTouchStart);
-    padDom.removeEventListener("touchmove", padTouchMove);
-    hammertime.off('tap', padClick);
-    hammertime.on('swipeleft', swipeLeft);
-    hammertime.on('swiperight', swipeRight);
-    hammertime.on('swipeup', swipeUp);
-    hammertime.on('swipedown', swipeDown);    
+    mousePadDom.style.display = 'flex';
+  }
+   else if (MODE == 'gesture') {
+    gesturePadDom.style.display = 'flex';
+  }
+  gestureDomHammer.on('tap', eventHandler.padClick);
+  padDomHammer.on('tap', eventHandler.padClick);
+  gestureDomHammer.on('swipeleft', eventHandler.swipeLeft);
+  gestureDomHammer.on('swiperight', eventHandler.swipeRight);
+  gestureDomHammer.on('swipeup', eventHandler.swipeUp);
+  gestureDomHammer.on('swipedown', eventHandler.swipeDown);  
+  barDom.addEventListener("touchstart", eventHandler.barTouchStart);
+  barDom.addEventListener("touchmove", eventHandler.barTouchMove);
+  padDom.addEventListener("touchstart", eventHandler.padTouchStart);
+  padDom.addEventListener("touchmove", eventHandler.padTouchMove);
+}
+
+function changePanel (type) {
+  mouseDom.classList.remove('active')
+  gestureDom.classList.remove('active')
+  mousePadDom.style.display = 'none';
+  gesturePadDom.style.display = 'none';
+  if (type == 'mouse') {
+    MODE = 'mouse'
+    mouseDom.classList.add('active')
+    gestureDom.style.display = 'flex';
+  }
+  else if (type == 'gesture') {
+    MODE = 'gesture'
+    gestureDom.classList.add('active')
+    gesturePadDom.style.display = 'flex';
   }
 }
 

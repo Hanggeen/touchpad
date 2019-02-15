@@ -2,7 +2,7 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
   <meta name="apple-mobile-web-app-title" content="">
@@ -34,11 +34,18 @@
     top:0;
     left:0;
   }
+  .area {
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    height: 90%;
+  }
   #pad {
     position: absolute;
     left: 0;
     top: 0;
-    height: 90%;
+    height: 100%;
     width: 80%;
     background-color: #fafafa;
     display: flex;
@@ -55,11 +62,16 @@
     color: #fafafa;
     font-weight: 900;
   }
+  #gesturearea > p{
+    font-size: 30px;
+    color: #f1f1f1;
+    font-weight: 900;
+  }
   #bar {
     position: absolute;
     right: 0;
     top: 0;
-    height: 90%;
+    height: 100%;
     width: 20%;
     background-color: #f1f1f1;
     display: flex;
@@ -115,6 +127,11 @@
     opacity: 0
   }
   #mousearea {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -122,20 +139,27 @@
   p {
     line-height: 100%;
   }
+  #gesturearea{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   </style>
 </head>
 <body>
   <div id="main">
     <div id="tips" class="hide">tips</div>
     <div class="area">
-      <div id="mousearea">
+      <div id="mousearea" style="display:none">
         <div id="pad"><p class="center">滑动光标</p></div>
         <div id="bar"><p>上<br>下<br>滑<br>动</p></div>
       </div>
-      <div id="gesturearea"><p></></div>
+      <div id="gesturearea" style="display:none"><p>上下左右滑动</p></div>
     </div>
     <div class="footer">
-      <div id="mouse" class="active">鼠标</div>
+      <div id="mouse" class="active">触摸板</div>
       <div id="gesture">手势</div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 class RemoveReceiver {
-  constructor(url = '127.0.0.1:3000') {
+  constructor(url = '10.13.131.182:3000') {
     this.wsurl = url
     this._initPointer()
     this._initWebSocket()
@@ -27,6 +27,7 @@ class RemoveReceiver {
     // 响应收到的消息:
     ws.addEventListener('message', message => {
         var msg = JSON.parse(message.data);
+        console.log(msg)
         if (msg.action == 'slide') {
           this._setPointer(msg.data.x, msg.data.y);
         }
