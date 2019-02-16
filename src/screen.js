@@ -1,5 +1,8 @@
 import './style.less'
-class RemoveReceiver {
+import trackpadhtml from './trackpad.html'
+import {str2dom} from './tools'
+import QRCode from './libs/qrcode'
+class TrackPad {
   constructor(param = '10.13.131.182:3000') {
     if (typeof param == 'object') {
       this.wsurl = param.wsurl
@@ -12,8 +15,10 @@ class RemoveReceiver {
     this.qrcodeon = false;
     this._initPointer()
     this._initWebSocket()
-
+    this._initSuspend()
     this.bindhandler = {}
+
+    console.log(QRCode)
 
     var qrcode = new QRCode(this.$("#qrcode"), {
       text: this.pageurl + "?ws=" + this.wsurl,
@@ -36,6 +41,13 @@ class RemoveReceiver {
       return document.getElementById(param.slice(1))
     }
     return document.querySelector(param)
+  }
+  _initSuspend() {
+    console.log(str2dom)
+    var dom = str2dom(trackpadhtml);
+    console.log(dom)
+    document.getElementsByTagName('body')[0].appendChild(dom[0]);
+
   }
   _initPointer() {
     this.pointerX = 0;
@@ -117,5 +129,4 @@ class RemoveReceiver {
     }, 3000)
   }
 }
-
-export {RemoveReceiver};
+export {TrackPad};

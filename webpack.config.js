@@ -1,12 +1,12 @@
 var Path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   devtool: false,
   entry: Path.resolve(__dirname, './src/screen.js'),
   output: {
     path: Path.resolve(__dirname, './dist'),
-    filename: '[name].min.js',
+    filename: 'trackpad.min.js',
     library: '',
     libraryTarget: 'window',
     umdNamedDefine: true
