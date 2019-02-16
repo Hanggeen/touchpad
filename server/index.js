@@ -33,6 +33,7 @@ wss.on("connection", function(ws) {
       }
       ws.send(JSON.stringify({
         status: "ok",
+        type: "register",
         msg: 'Register success'
       }));
     } else if (msg.type == "init-poster") {
