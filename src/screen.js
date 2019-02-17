@@ -1,9 +1,9 @@
 import './style.less'
 import trackpadhtml from './trackpad.html'
-import {str2dom} from './tools'
+import {str2dom,randomString} from './tools'
 import QRCode from './libs/qrcode'
 class TrackPad {
-  constructor(param = '10.13.131.182:3000') {
+  constructor(param = '127.0.0.1:3000') {
     if (typeof param == 'object') {
       this.wsurl = param.wsurl
       this.pageurl = param.pageurl || 'https://hanggeen.github.io/t/'
@@ -12,16 +12,17 @@ class TrackPad {
     } else {
       throw new Error('trackpad param error')
     }
+    this.code = randomString()
     this.qrcodeon = false;
     this._initPointer()
     this._initWebSocket()
     this._initSuspend()
     this.bindhandler = {}
 
-    console.log(QRCode)
+    console.log(this.code)
 
     var qrcode = new QRCode(this.$("#qrcode"), {
-      text: this.pageurl + "?ws=" + this.wsurl,
+      text: this.pageurl + "?ws=" + this.wsurl + '&co=' +this.code,
       width: 128,
       height: 128,
       colorDark : "#000000",
@@ -63,10 +64,10 @@ class TrackPad {
   _initWebSocket() {
     let ws = new WebSocket(`ws://${this.wsurl}`);
     // 打开WebSocket连接后立刻发送一条消息:
-    ws.addEventListener('open', function () {
+    ws.addEventListener('open', () => {
         ws.send(JSON.stringify({
           type: 'init-listener',
-          data: 'first'
+          data: this.code
         }));
     });
     // 响应收到的消息:
