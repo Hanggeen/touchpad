@@ -76,7 +76,7 @@ var eventHandler = {
 
 
 
-var CODE = $.getQueryString('code') || 'public';
+var CODE = $.getQueryString('co') || 'public';
 var MODE = 'mouse'
 
 var padDom = $("#pad");
@@ -97,15 +97,20 @@ var gestureDomHammer = new Hammer(gesturePadDom, {});
 (function () {
 
   // 打开一个WebSocket:
-  var ws = new WebSocket("ws://" + $.getQueryString('ws'));
+  window.ws = new WebSocket("ws://" + $.getQueryString('ws'));
   // 打开WebSocket连接后立刻发送一条消息:
   ws.addEventListener("open", function() {
-    ws.sendMessage('init-poster', CODE)
+    ws.send(JSON.stringify({
+      type: "center",
+      code: CODE,
+      action: "init-poster",
+      data: CODE
+    }))
   });
 
   // 响应收到的消息:
   ws.addEventListener("message", function(msg) {
-    $.showTips(JSON.parse(msg.data).msg)
+    $.showTips(JSON.parse(msg.data).data)
   });
 
   ws.sendMessage = function (action, data = null) {

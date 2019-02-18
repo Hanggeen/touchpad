@@ -1,88 +1,126 @@
-// 导入WebSocket模块:
 const WebSocket = require("ws");
-
-// 引用Server类:
 const WebSocketServer = WebSocket.Server;
 
-// 实例化:
-const wss = new WebSocketServer({
+const ws = new WebSocketServer({
   port: 3000
 });
 
 let STORE = {};
 
-wss.on("connection", function(ws) {
+ws.on("connection", function(ws) {
   console.log("有新连接");
   let code = "";
+  let connectiontype = '';
   ws.on("message", function(message) {
     let msg;
     try {
       msg = JSON.parse(message);
     } catch (e) {
-      ws.send("发送格式错误");
-      console.log("发送格式错误");
+      ws.send(JSON.stringify({
+        type: "msg",
+        code: 1,
+        action: 'error',
+        data: "解析数据错误"
+      }));
     }
-    if (msg.type == "init-listener") {
-      if (STORE[msg.data]) {
-        STORE[msg.data].listener = ws;
-        code = msg.data;
-      } else {
-        STORE[msg.data] = {
-          listener: ws
-        };
+
+    if (msg.type == 'center') {
+      if (msg.action == 'init-listener') {
+        if (STORE[msg.code]) {
+          if (STORE[msg.code].listener) {
+            STORE[msg.code].listener.send(JSON.stringify({
+              type: 'center',
+              code: 2,
+              action: 'error',
+              data: '您已经被挤下线'
+            }))
+          }
+          STORE[msg.data].listener = ws
+        } else {
+          STORE[msg.data] = {
+            listener: ws
+          };
+        }
+        code = msg.code
+        connectiontype = 'listener'
+        STORE[msg.code].listener.send(JSON.stringify({
+          type: 'center',
+          code: 0,
+          action: 'init-listener',
+          data: '接入成功'
+        }))
+      } else if (msg.action == 'init-poster') {
+        if (STORE[msg.code]) {
+          if (STORE[msg.code].poster) {
+            STORE[msg.code].poster.send(JSON.stringify({
+              type: 'center',
+              code: 2,
+              action: 'error',
+              data: '您已经被挤下线'
+            }))
+          }
+          STORE[msg.data].poster = ws
+        } else {
+          STORE[msg.data] = {
+            poster: ws
+          };
+        }
+        code = msg.code
+        connectiontype = 'poster'
+        STORE[msg.code].poster.send(JSON.stringify({
+          type: 'center',
+          code: 0,
+          action: 'init-poster',
+          data: '接入成功'
+        }))
       }
-      ws.send(JSON.stringify({
-        status: "ok",
-        type: "register",
-        msg: 'Register success'
-      }));
-    } else if (msg.type == "init-poster") {
-      if (STORE[msg.data]) {
-        STORE[msg.data].poster = ws;
-        code = msg.data;
-      } else {
-        STORE[msg.data] = {
-          poster: ws
-        };
+    } else if (msg.type == 'post') {
+      if (connectiontype == 'listener') {
+        if (STORE[msg.code].poster != undefined) {
+          STORE[msg.code].poster.send(message);
+        } else {
+          ws.send(JSON.stringify({
+            type: "msg",
+            code: 1,
+            action: 'error',
+            data: "此码未连接"
+          }));
+        }
       }
-      ws.send(JSON.stringify({
-        status: "ok",
-        msg: 'Register success'
-      }));
-    } else if (STORE[msg.code]) {
-      if (msg.type == "post") {
+      if (connectiontype == 'poster') {
         if (STORE[msg.code].listener != undefined) {
           STORE[msg.code].listener.send(message);
         } else {
           ws.send(JSON.stringify({
-            status: "fail",
-            msg: '此码未连接'
+            type: "msg",
+            code: 1,
+            action: 'error',
+            data: "此码未连接"
           }));
         }
       }
-
-      if (msg.type == "listen") {
-        if (STORE[msg.code].post) {
-          STORE[msg.code].post.send(message);
-        } else {
-          ws.send(JSON.stringify({
-            status: "fail",
-            msg: '此码未连接'
-          }));
-        }
-      }
-    } else {
-      ws.send(JSON.stringify({
-        status: "fail",
-        msg: '此码未连接'
-      }));
     }
   });
 
   ws.on("close", function() {
-    console.log('有关闭')
-    if (code) {
-      STORE["code"] = null;
+    console.log(`${connectiontype == 'listener' ? '监听' : '发送'}关闭`)
+    if (code && connectiontype == 'listener') {
+      STORE[code].listener = null;
+      STORE[code].poster.send(JSON.stringify({
+        type: "msg",
+        code: 1,
+        action: 'error',
+        data: "已断开连接诶"
+      }))
+    }
+    if (code && connectiontype == 'poster') {
+      STORE[code].poster = null;
+      STORE[code].listener.send(JSON.stringify({
+        type: "msg",
+        code: 1,
+        action: 'error',
+        data: "已断开连接诶"
+      }))
     }
   });
 });

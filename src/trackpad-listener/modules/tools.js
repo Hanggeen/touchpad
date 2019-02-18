@@ -15,7 +15,7 @@ export function randomString(len) {
 	var chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890';
 	var maxPos = chars.length;
 	var code = '';
-	for (i = 0; i < len; i++) {
+	for (var i = 0; i < len; i++) {
 		code += chars.charAt(Math.floor(Math.random() * maxPos));
 	}
 	return code;
