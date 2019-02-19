@@ -104,7 +104,7 @@ ws.on("connection", function(ws) {
 
   ws.on("close", function() {
     console.log(`${connectiontype == 'listener' ? '监听' : '发送'}关闭`)
-    if (code && connectiontype == 'listener') {
+    if (code && connectiontype == 'listener' && STORE[code].poster) {
       STORE[code].listener = null;
       STORE[code].poster.send(JSON.stringify({
         type: "msg",
@@ -113,7 +113,7 @@ ws.on("connection", function(ws) {
         data: "已断开连接诶"
       }))
     }
-    if (code && connectiontype == 'poster') {
+    if (code && connectiontype == 'poster' && STORE[code].listener) {
       STORE[code].poster = null;
       STORE[code].listener.send(JSON.stringify({
         type: "msg",
