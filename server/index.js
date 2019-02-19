@@ -27,7 +27,7 @@ ws.on("connection", function(ws) {
     if (msg.type == 'center') {
       if (msg.action == 'init-listener') {
         if (STORE[msg.code]) {
-          if (STORE[msg.code].listener) {
+          if (STORE[msg.code].listener && STORE[msg.code].listener.readyState == 1) {
             STORE[msg.code].listener.send(JSON.stringify({
               type: 'center',
               code: 2,
@@ -51,7 +51,7 @@ ws.on("connection", function(ws) {
         }))
       } else if (msg.action == 'init-poster') {
         if (STORE[msg.code]) {
-          if (STORE[msg.code].poster) {
+          if (STORE[msg.code].poster && STORE[msg.code].poster.readyState == 1) {
             STORE[msg.code].poster.send(JSON.stringify({
               type: 'center',
               code: 2,
@@ -106,21 +106,25 @@ ws.on("connection", function(ws) {
     console.log(`${connectiontype == 'listener' ? '监听' : '发送'}关闭`)
     if (code && connectiontype == 'listener' && STORE[code].poster) {
       STORE[code].listener = null;
-      STORE[code].poster.send(JSON.stringify({
-        type: "msg",
-        code: 1,
-        action: 'error',
-        data: "已断开连接诶"
-      }))
+      if (STORE[code].poster && STORE[code].poster.readyState == 1) {
+        STORE[code].poster.send(JSON.stringify({
+          type: "msg",
+          code: 1,
+          action: 'error',
+          data: "已断开连接诶"
+        }))
+      }
     }
     if (code && connectiontype == 'poster' && STORE[code].listener) {
       STORE[code].poster = null;
-      STORE[code].listener.send(JSON.stringify({
-        type: "msg",
-        code: 1,
-        action: 'error',
-        data: "已断开连接诶"
-      }))
+      if (STORE[code].listener && STORE[code].listener.readyState == 1) {
+        STORE[code].listener.send(JSON.stringify({
+          type: "msg",
+          code: 1,
+          action: 'error',
+          data: "已断开连接诶"
+        }))
+      }
     }
   });
 });
