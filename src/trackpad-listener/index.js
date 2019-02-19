@@ -28,11 +28,11 @@ class TrackPad {
   _initSuspend() {
     const dom = str2dom(suspend)[0];
     document.getElementsByTagName('body')[0].appendChild(dom);
-    $('#trackpad').onclick = ()=>{
-      let qrcodedom = $('#qrcode');
+    $('#_trackpad').onclick = ()=>{
+      let qrcodedom = $('#_trackpad_qrcode');
       qrcodedom.style.display = qrcodedom.style.display == 'none' ? 'flex' : 'none'
     }
-    new QRCode($("#qrcode"), {
+    new QRCode($("#_trackpad_qrcode"), {
       text: this.pageurl + "?ws=" + this.wsurl + '&co=' +this.code,
       width: 128,
       height: 128,
@@ -92,13 +92,13 @@ class TrackPad {
     })
   }
   _changeStatus(text) {
-    $('#tips').innerHTML = text;
+    $('#_trackpad_tips').innerHTML = text;
   }
   showQrcode() {
-    $('#qrcode').style.display = 'flex';
+    $('#_trackpad_qrcode').style.display = 'flex';
   }
   hideQrcode() {
-    $('#qrcode').style.display = 'none';
+    $('#_trackpad_qrcode').style.display = 'none';
   }
   on(type, callback) {
     if (['click','swipe'].indexOf(type) != -1) {
@@ -109,10 +109,10 @@ class TrackPad {
   }
   _showToast(text) {
     clearTimeout(this.timer)
-    $('#toast').classList.add('active');
-    $('#toast').innerHTML = text;
+    $('#_trackpad_toast').classList.add('active');
+    $('#_trackpad_toast').innerHTML = text;
     this.timer = setTimeout(function(){
-      $('#toast').classList.remove('active');
+      $('#_trackpad_toast').classList.remove('active');
     }, 3000)
   }
 }
