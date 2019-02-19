@@ -146,6 +146,7 @@ var gestureDomHammer = new Hammer(gesturePadDom, {});
     mouseDom.classList.add('active')
     mousePadDom.style.display = 'flex';
     gesturePadDom.style.display = 'none';
+    ws.sendMessage('change', 'mouse');
   })
   gestureDom.addEventListener("click", function () {
     MODE = 'gesture'
@@ -153,5 +154,6 @@ var gestureDomHammer = new Hammer(gesturePadDom, {});
     mouseDom.classList.remove('active')
     mousePadDom.style.display = 'none';
     gesturePadDom.style.display = 'flex';
+    ws.sendMessage('change', 'gesture');
   })
 })()
