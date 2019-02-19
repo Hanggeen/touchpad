@@ -81,6 +81,13 @@ class TrackPad {
               this.bindCallback.swipe(msg)
             }
           }
+          if (msg.action == 'change') {
+            if (msg.data == 'mouse') {
+              this.pointer.show()
+            } else {
+              this.pointer.hide()
+            }
+          }
         }
     })
   }
