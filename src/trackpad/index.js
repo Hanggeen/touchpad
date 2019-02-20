@@ -1,3 +1,4 @@
+import Hammer from '../libs/hammer.min.js'
 // 初始化工具
 var $ = function (param) {
   if (param[0] == '#') {
