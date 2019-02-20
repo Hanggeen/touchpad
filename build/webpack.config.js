@@ -5,11 +5,11 @@ module.exports = {
   mode: 'development',
   devtool: false,
   entry: {
-    'trackpad-listener':Path.resolve(__dirname, './src/trackpad-listener/index.js'),
-    'trackpad': Path.resolve(__dirname, './src/trackpad/index.js')
+    'trackpad-listener':Path.resolve(__dirname, '../src/trackpad-listener/index.js'),
+    'trackpad': Path.resolve(__dirname, '../src/trackpad/index.js')
   },
   output: {
-    path: Path.resolve(__dirname, './dist'),
+    path: Path.resolve(__dirname, '../dist'),
     filename: '[name].min.js',
     library: '',
     libraryTarget: 'window',
