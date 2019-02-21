@@ -57,7 +57,17 @@ class TrackPad {
         var msg = JSON.parse(message.data);
         if (msg.type == 'center') {
           if (msg.action == 'init-listener' && msg.code == 0) {
-            this._changeStatus('已接入')
+            this._changeStatus(`已接入/${this.connectionCount}连接`)
+          }
+          if (msg.action == 'connect' && msg.code == 0) {
+            this.connectionCount++
+            this._changeStatus(`已接入/${this.connectionCount}连接`)
+            this._showToast('有远端接入')
+          }
+          if (msg.action == 'disconnect' && msg.code == 0) {
+            this.connectionCount--
+            this._changeStatus(`已接入/${this.connectionCount}连接`)
+            this._showToast('有远端断开')
           }
         } else if (msg.type == 'post') {
           if (msg.action == 'slide') {

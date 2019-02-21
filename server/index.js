@@ -73,6 +73,14 @@ ws.on("connection", function(ws) {
           action: 'init-poster',
           data: '接入成功'
         }))
+        if (STORE[msg.code].listener && STORE[msg.code].listener.readyState == 1) {
+          STORE[msg.code].listener.send(JSON.stringify({
+            type: 'center',
+            code: 0,
+            action: 'connect',
+            data: '接入成功'
+          }))
+        }
       }
     } else if (msg.type == 'post') {
       if (connectiontype == 'listener') {
@@ -119,10 +127,10 @@ ws.on("connection", function(ws) {
       STORE[code].poster = null;
       if (STORE[code].listener && STORE[code].listener.readyState == 1) {
         STORE[code].listener.send(JSON.stringify({
-          type: "msg",
-          code: 1,
-          action: 'error',
-          data: "已断开连接诶"
+          type: "center",
+          code: 0,
+          action: 'disconnect',
+          data: "断开了一个连接"
         }))
       }
     }
