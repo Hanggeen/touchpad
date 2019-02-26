@@ -115,7 +115,7 @@ class TrackPad {
     $('#_trackpad_qrcode').style.display = 'none';
   }
   on(type, callback) {
-    if (['click','swipe'].indexOf(type) != -1) {
+    if (['click','swipe','change'].indexOf(type) != -1) {
       this.bindCallback[type] = function(e){
         callback(e)
       }
