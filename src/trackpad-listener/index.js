@@ -41,7 +41,7 @@ class TrackPad {
   }
   _initWebSocket() {
     let wsurl;
-    if (document.location.protocol === 'https') {
+    if (document.location.protocol === 'https:') {
       wsurl = `wss://${this.wsurl}`
     } else {
       wsurl = `ws://${this.wsurl}`

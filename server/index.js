@@ -1,13 +1,30 @@
 const WebSocket = require("ws");
-const WebSocketServer = WebSocket.Server;
+const fs = require('fs')
+const httpServer = Config.ssl ? require('https') : require('http')
 
-const ws = new WebSocketServer({
-  port: 3000
-});
+const Config = require("./config")
+
+// http server
+let server = null
+if (Config.ssl) {
+  server = httpServer.createServer({
+    key: fs.readFileSync( Config.ssl_key ),
+    cert: fs.readFileSync( Config.ssl_cert )
+  }, function( req, res ) {
+    res.writeHead(200);
+    res.end("This is used for websocket!\n");
+  }).listen( Config.port );
+} else {
+  server = httpServer.createServer( processRequest ).listen( Config.port );
+}
+
+// websocker server
+const WebSocketServer = WebSocket.Server;
+const wss = new WebSocketServer( { server } );
 
 let STORE = {};
 
-ws.on("connection", function(ws) {
+wss.on("connection", function(ws) {
   console.log("有新连接");
   let code = "";
   let connectiontype = '';

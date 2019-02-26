@@ -97,8 +97,14 @@ var gestureDomHammer = new Hammer(gesturePadDom, {});
 
 (function () {
 
+  let wsurl;
+  if (document.location.protocol === 'https:') {
+    wsurl = `wss://${$.getQueryString('ws')}`
+  } else {
+    wsurl = `ws://${$.getQueryString('ws')}`
+  }
   // 打开一个WebSocket:
-  window.ws = new WebSocket("ws://" + $.getQueryString('ws'));
+  window.ws = new WebSocket(wsurl);
   // 打开WebSocket连接后立刻发送一条消息:
   ws.addEventListener("open", function() {
     ws.send(JSON.stringify({
