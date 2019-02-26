@@ -16,10 +16,8 @@ class TrackPad {
     }
 
     this.code = randomString()
-    alert(this.code)
     this.bindCallback = {}
-
-
+    this.connectionCount = 0
 
     this.pointer = new Pointer()
     this._initWebSocket()
@@ -42,7 +40,13 @@ class TrackPad {
     });
   }
   _initWebSocket() {
-    let ws = new WebSocket(`ws://${this.wsurl}`);
+    let wsurl;
+    if (document.location.protocol === 'https') {
+      wsurl = `wss://${this.wsurl}`
+    } else {
+      wsurl = `ws://${this.wsurl}`
+    }
+    let ws = new WebSocket(wsurl);
     // 打开WebSocket连接后立刻发送一条消息:
     ws.addEventListener('open', () => {
         ws.send(JSON.stringify({
