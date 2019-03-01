@@ -67,11 +67,16 @@ class TrackPad {
             this.connectionCount++
             this._changeStatus(`已接入/${this.connectionCount}连接`)
             this._showToast('有远端接入')
+            this.pointer.show()
           }
           if (msg.action == 'disconnect' && msg.code == 0) {
             this.connectionCount--
             this._changeStatus(`已接入/${this.connectionCount}连接`)
             this._showToast('有远端断开')
+            // 无接入，隐藏鼠标
+            if (this.connectionCount === 0) {
+              this.pointer.hide()
+            }
           }
         } else if (msg.type == 'post') {
           if (msg.action == 'slide') {
