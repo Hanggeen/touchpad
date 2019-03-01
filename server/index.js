@@ -1,8 +1,8 @@
 const WebSocket = require("ws");
 const fs = require('fs')
+const Config = require("./config")
 const httpServer = Config.ssl ? require('https') : require('http')
 
-const Config = require("./config")
 
 // http server
 let server = null
@@ -15,7 +15,7 @@ if (Config.ssl) {
     res.end("This is used for websocket!\n");
   }).listen( Config.port );
 } else {
-  server = httpServer.createServer( processRequest ).listen( Config.port );
+  server = httpServer.createServer().listen( Config.port );
 }
 
 // websocker server
