@@ -56,6 +56,10 @@ var eventHandler = {
   padClick: function() {
     ws.sendMessage('click')
   },
+  swipeClick: function() {
+    ws.sendMessage('swipe', 'click');
+    $.showTips('点击');
+  },
   swipeLeft: function(ev) {
     ws.sendMessage('swipe', 'left');
     $.showTips('向左滑动');
@@ -137,7 +141,7 @@ var gestureDomHammer = new Hammer(gesturePadDom, {});
   }
   padDomHammer.on('tap', eventHandler.padClick);
   gestureDomHammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-  gestureDomHammer.on('tap', eventHandler.padClick);
+  gestureDomHammer.on('tap', eventHandler.swipeClick);
   gestureDomHammer.on('swipeleft', eventHandler.swipeLeft);
   gestureDomHammer.on('swiperight', eventHandler.swipeRight);
   gestureDomHammer.on('swipeup', eventHandler.swipeUp);
