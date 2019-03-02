@@ -106,6 +106,9 @@ class TrackPad {
             } else {
               this.pointer.hide()
             }
+            if (this.bindCallback.change) {
+              this.bindCallback.change(msg)
+            }
           }
         }
     })
