@@ -15,7 +15,7 @@ class TrackPad {
       throw new Error('trackpad param error')
     }
 
-    this.code = randomString()
+    this.code = ''
     this.bindCallback = {}
     this.connectionCount = 0
 
@@ -30,14 +30,6 @@ class TrackPad {
       let qrcodedom = $('#_trackpad_qrcode');
       qrcodedom.style.display = qrcodedom.style.display == 'none' ? 'flex' : 'none'
     }
-    new QRCode($("#_trackpad_qrcode"), {
-      text: this.pageurl + "?ws=" + this.wsurl + '&co=' +this.code,
-      width: 128,
-      height: 128,
-      colorDark : "#000000",
-      colorLight : "#ffffff",
-      correctLevel : QRCode.CorrectLevel.H
-    });
   }
   _initWebSocket() {
     let wsurl;
@@ -62,6 +54,18 @@ class TrackPad {
         if (msg.type == 'center') {
           if (msg.action == 'init-listener' && msg.code == 0) {
             this._changeStatus(`已接入/${this.connectionCount}连接`)
+            this.code = msg.data;
+            
+    console.log(this.pageurl + "?ws=" + this.wsurl + '&co=' +this.code);
+    new QRCode($("#_trackpad_qrcode"), {
+      text: this.pageurl + "?ws=" + this.wsurl + '&co=' +this.code,
+      width: 128,
+      height: 128,
+      colorDark : "#000000",
+      colorLight : "#ffffff",
+      correctLevel : QRCode.CorrectLevel.H
+    });
+
           }
           if (msg.action == 'connect' && msg.code == 0) {
             this.connectionCount++
