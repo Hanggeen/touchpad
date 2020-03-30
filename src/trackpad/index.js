@@ -113,19 +113,18 @@ const gestureDomHammer = new Hammer(gesturePadDom, {});
 
   let wsurl;
   if (document.location.protocol === 'https:') {
-    wsurl = `wss://${$.getQueryString('ws')}`
+    wsurl = `wss://${$.getQueryString('ws')}/poster`
   } else {
-    wsurl = `ws://${$.getQueryString('ws')}`
+    wsurl = `ws://${$.getQueryString('ws')}/poster`
   }
   // 打开一个WebSocket:
   window.ws = new WebSocket(wsurl);
   // 打开WebSocket连接后立刻发送一条消息:
   ws.addEventListener("open", function() {
     ws.send(JSON.stringify({
-      type: "center",
+      type: "operate",
       code: CODE,
-      action: "init-poster",
-      data: CODE
+      action: "init"
     }))
   });
 
@@ -136,7 +135,7 @@ const gestureDomHammer = new Hammer(gesturePadDom, {});
 
   ws.sendMessage = function (action, data = null) {
     this.send(JSON.stringify({
-      type: "post",
+      type: "track",
       code: CODE,
       action: action,
       data: data

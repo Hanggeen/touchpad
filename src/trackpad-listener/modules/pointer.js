@@ -2,7 +2,9 @@ import pointerhtml from '../template/pointer.html'
 import {str2dom} from '../modules/tools'
 export default class Pointer {
   constructor () {
+    this.pointerWidth = 11;
     this.dom = str2dom(pointerhtml)[0]
+    console.log(this.dom);
     document.getElementsByTagName('body')[0].appendChild(this.dom)
     this.clientHeight = document.documentElement.clientHeight || document.body.clientHeight;
     this.clientWidth = document.documentElement.clientWidth || document.body.clientWidth;
@@ -20,11 +22,11 @@ export default class Pointer {
   set (x, y) {
     this.pointerX += x;
     this.pointerY += y;
-    if (this.pointerX + 11 > this.clientWidth) {
-      this.pointerX = this.clientWidth - 11
+    if (this.pointerX + this.pointerWidth > this.clientWidth) {
+      this.pointerX = this.clientWidth - this.pointerWidth
     }
-    if (this.pointerY + 11  > this.clientHeight) {
-      this.pointerY = this.clientHeight - 11
+    if (this.pointerY + this.pointerWidth  > this.clientHeight) {
+      this.pointerY = this.clientHeight - this.pointerWidth
     }
     if (this.pointerX < 0) {
       this.pointerX = 0

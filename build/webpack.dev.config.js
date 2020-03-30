@@ -6,7 +6,8 @@ module.exports = {
   devtool: false,
   entry: {
     'trackpad-listener':path.resolve(__dirname, '../src/trackpad-listener/index.js'),
-    'trackpad': path.resolve(__dirname, '../src/trackpad/index.js')
+    'trackpad': path.resolve(__dirname, '../src/trackpad/index.js'),
+    'pad': path.resolve(__dirname, '../src/pad/index.js')
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -15,6 +16,7 @@ module.exports = {
     libraryTarget: 'window',
     umdNamedDefine: true
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -43,6 +45,12 @@ module.exports = {
       template: 'src/trackpad-listener/index.html',
       chunks: ['trackpad-listener'],
       inject: 'head'
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Pad',
+      filename: 'pad.html',
+      template: 'src/pad/public/index.html',
+      chunks: ['pad']
     })
   ],
   devServer: {

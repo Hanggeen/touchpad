@@ -36,3 +36,16 @@ node server/index.js
 点击[Demo](https://niamoi.com/trackpad/)
 ##### 注意
 目前在不定期修复Bug和升级，欢迎提出建议
+
+#### 通讯消息
+以操作为主要
+``` json
+{
+  "type": "operate",
+  "action": "init"
+}
+```
+
+type: operate | answer | track | msg
+
+

@@ -1,6 +1,6 @@
 import './style/index.less'
 import suspend from './template/suspend.html'
-import {str2dom,randomString} from './modules/tools'
+import {str2dom} from './modules/tools'
 import Pointer from './modules/pointer'
 import QRCode from '../libs/qrcode'
 import $ from './modules/$'
@@ -34,25 +34,23 @@ class TrackPad {
   _initWebSocket() {
     let wsurl;
     if (document.location.protocol === 'https:') {
-      wsurl = `wss://${this.wsurl}`
+      wsurl = `wss://${this.wsurl}/listener`
     } else {
-      wsurl = `ws://${this.wsurl}`
+      wsurl = `ws://${this.wsurl}/listener`
     }
     let ws = new WebSocket(wsurl);
     // 打开WebSocket连接后立刻发送一条消息:
     ws.addEventListener('open', () => {
         ws.send(JSON.stringify({
-          type: "center",
-          code: this.code,
-          action: "init-listener",
-          data: this.code
+          type: "operate",
+          action: "init"
         }))
     });
     // 响应收到的消息:
     ws.addEventListener('message', message => {
         var msg = JSON.parse(message.data);
-        if (msg.type == 'center') {
-          if (msg.action == 'init-listener' && msg.code == 0) {
+        if (msg.type == 'answer') {
+          if (msg.action == 'init' && msg.data) {
             this._changeStatus(`已接入/${this.connectionCount}连接`)
             this.code = msg.data;
             
@@ -82,7 +80,7 @@ class TrackPad {
               this.pointer.hide()
             }
           }
-        } else if (msg.type == 'post') {
+        } else if (msg.type == 'track') {
           if (msg.action == 'slide') {
             this.pointer.set(msg.data.x, msg.data.y)
           }
