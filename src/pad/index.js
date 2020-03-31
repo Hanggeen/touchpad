@@ -1,34 +1,34 @@
 import './src/style/style.less';
+import Server from './src/mobules/server'
 import Scroller from './src/mobules/scroller'
 import Toucher from './src/mobules/toucher'
-
-console.log('hahah');
-
-
-setTimeout(() => {
-  import(/* webpackChunkName: "hammerjs" */ 'hammerjs').then(Hammer => {
-    console.log('完成加载');
-    console.log(Hammer);
-  })
-}, 10000);
+import Gesture from './src/mobules/gesture'
+import { getQuery } from './src/common/tools'
 
 (async function() {
-
+  let url = getQuery('ws');
+  let code = getQuery('co');
   let wsurl;
   if (document.location.protocol === 'https:') {
     wsurl = `wss://${url}/poster`
   } else {
     wsurl = `ws://${url}/poster`
   }
-  const poster = new Poster(wsurl, code);
-  let res = await poster.register(wsurl, code);
+  console.log(wsurl);
+  const server = new Server(wsurl, code);
+  let res = await server.init(wsurl, code);
+  console.log('asd2');
   if (!res) {
+    console.log(`[${code}]初始化失败`);
     return;
   }
-  
+
+  console.log('asdddd');
   const scroller = new Scroller(document.getElementById('bar'));
+  console.log(scroller);
   scroller.listen((msg) => {
-    poster.send({
+    console.log('asd');
+    server.send({
       type: 'track',
       track: {
         action: 'srcoll',
@@ -39,10 +39,32 @@ setTimeout(() => {
   
   const toucher = new Toucher(document.getElementById('pad'));
   toucher.listen((msg) => {
-    console.log('haha');
-    console.log(msg);
+    server.send({
+      type: 'track',
+      track: {
+        action: 'touch',
+        data: msg
+      }
+    })
   })
 
+  server.messageHandler((msg) => {
+    // 
+  })
+
+  if (res.gesture) {
+    const gesture = new Gesture(document.getElementById('bar'));
+    await gesture.init();
+    gesture.listen((msg) => {
+      server.send({
+        type: 'track',
+        track: {
+          action: 'gesture',
+          data: msg
+        }
+      })
+    })
+  }
 
 })();
 

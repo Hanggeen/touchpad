@@ -18,6 +18,8 @@ class Store {
   }
 
   send(code, type, data) {
+    console.log(this.controls[code][type]);
+    console.log(this.controls[code][type].readyState);
     if (
       this.controls[code] &&
       this.controls[code][type] &&
@@ -26,6 +28,7 @@ class Store {
       this.controls[code][type].send(JSON.stringify(data))
       return true
     }
+    console.log('返回失败');
     return false
   }
 

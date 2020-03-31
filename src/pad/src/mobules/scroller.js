@@ -1,5 +1,6 @@
 export default class Scroller {
   constructor(dom) {
+    console.log(dom);
     this.dom = dom;
     this.dom.addEventListener("touchstart", this.touchStart.bind(this));
     this.dom.addEventListener("touchmove", this.touchMove.bind(this));

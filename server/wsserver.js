@@ -11,7 +11,6 @@ class Server {
         new Listener(ws);
       }
       if (request.url == '/poster') {
-        console.log('ha')
         new Poster(ws);
       }
     });
