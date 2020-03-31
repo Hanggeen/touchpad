@@ -45,7 +45,6 @@ module.exports = class Poster{
     }
 
     if (STORE.test(code) && STORE.test(code, 'listener')) {
-      console.log(`[${code}]发送器写入`);
       STORE.set(code, 'poster', this.ws);
     } else {
       

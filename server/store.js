@@ -4,7 +4,8 @@ class Store {
   }
 
   set(code, type, ws) {
-    if (this.controls[code]) {
+    console.log(Object.keys(this.controls));
+    if (type === 'listener' && this.controls[code]) {
       return false
     }
     if (this.controls[code]) {
@@ -14,12 +15,11 @@ class Store {
         [type]: ws
       }
     }
+    console.log(`[${code}]${type}写入`);
     return true
   }
 
   send(code, type, data) {
-    console.log(this.controls[code][type]);
-    console.log(this.controls[code][type].readyState);
     if (
       this.controls[code] &&
       this.controls[code][type] &&

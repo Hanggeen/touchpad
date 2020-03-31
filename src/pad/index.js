@@ -17,17 +17,15 @@ import { getQuery } from './src/common/tools'
   console.log(wsurl);
   const server = new Server(wsurl, code);
   let res = await server.init(wsurl, code);
-  console.log('asd2');
   if (!res) {
     console.log(`[${code}]初始化失败`);
     return;
   }
 
-  console.log('asdddd');
   const scroller = new Scroller(document.getElementById('bar'));
   console.log(scroller);
   scroller.listen((msg) => {
-    console.log('asd');
+    console.log('asddd');
     server.send({
       type: 'track',
       track: {
@@ -66,5 +64,7 @@ import { getQuery } from './src/common/tools'
     })
   }
 
-})();
+})().catch(err => {
+  console.log(err);
+});
 

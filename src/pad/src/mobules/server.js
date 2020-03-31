@@ -37,10 +37,12 @@ export default class Server {
 
   _register() {
     return new Promise((resolve, reject) => {
-      this._openCallback = (msg) => {
-        this._openCallback = null;
+      this._registerCallback = (msg) => {
+        this._registerCallback = null;
+        console.log(msg);
         if (msg.type === 'answer' && msg.action === 'init') {
-          resolve(msg.data);
+          console.log('接收到');
+          resolve(msg.status);
         } else {
           reject();
         }
@@ -53,10 +55,6 @@ export default class Server {
     })
   }
 
-  _onopen() {
-    this._openCallback && this._openCallback();
-  }
-
   _onerror() {
     this.work = false;
     // TODO show Toast
@@ -67,8 +65,11 @@ export default class Server {
     // TODO show Toast
   }
 
-  _onmessage(msg) {
-    this._openCallback && this._openCallback(msg);
+  _onmessage(message) {
+    console.log('接收到返回');
+    console.log(this._registerCallback);
+    const msg = JSON.parse(message.data);
+    this._registerCallback && this._registerCallback(msg);
     this._messageCallback && this._messageCallback(msg);
   }
 
