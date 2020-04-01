@@ -46,6 +46,17 @@ import { getQuery } from './src/common/tools'
     })
   })
 
+  toucher.listenClick((msg) => {
+    console.log(3);
+    server.send({
+      type: 'track',
+      track: {
+        action: 'click',
+        data: msg
+      }
+    })
+  })
+
   server.messageHandler((msg) => {
     // 
   })

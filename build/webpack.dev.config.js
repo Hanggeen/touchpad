@@ -7,7 +7,8 @@ module.exports = {
   entry: {
     'trackpad-listener':path.resolve(__dirname, '../src/trackpad-listener/index.js'),
     'trackpad': path.resolve(__dirname, '../src/trackpad/index.js'),
-    'pad': path.resolve(__dirname, '../src/pad/index.js')
+    'pad': path.resolve(__dirname, '../src/pad/index.js'),
+    'listener': path.resolve(__dirname, '../src/listener/index.js')
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -43,14 +44,18 @@ module.exports = {
       title: 'TrackpadListen',
       filename: 'trackpad-listener.html',
       template: 'src/trackpad-listener/index.html',
-      chunks: ['trackpad-listener'],
-      inject: 'head'
     }),
     new HtmlWebpackPlugin({
       title: 'Pad',
       filename: 'pad.html',
       template: 'src/pad/public/index.html',
       chunks: ['pad']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'Listener',
+      filename: 'index.html',
+      template: 'src/listener/index.html',
+      chunks: ['listener']
     })
   ],
   devServer: {

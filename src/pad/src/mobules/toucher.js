@@ -4,12 +4,12 @@ export default class Toucher {
     console.log(dom);
     this.dom.addEventListener("touchstart", this.touchStart.bind(this));
     this.dom.addEventListener("touchmove", this.touchMove.bind(this));
+    this.dom.addEventListener("click", this.click.bind(this));
     this.touchMoveCb = null;
   }
   
   // 开始触摸时，记住标记位置
   touchStart(e) {
-    e.preventDefault()
     this.startX = e.touches[0].pageX;
     this.startY = e.touches[0].pageY;
   }
@@ -26,8 +26,19 @@ export default class Toucher {
     }
   }
 
+  click(cb) {
+    console.log(1);
+    if (this.clickCb) {
+      this.clickCb();
+    }
+  }
+
   listen(cb) {
     this.touchMoveCb = cb;
-    console.log(this.touchMoveCb);
+  }
+
+  listenClick(cb) {
+    console.log(2);
+    this.clickCb = cb;
   }
 }
