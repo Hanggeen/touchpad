@@ -20,6 +20,8 @@ export default class Toucher {
       let X, Y;
       X = e.touches[0].pageX - this.startX;
       Y = e.touches[0].pageY - this.startY;
+      X = Math.round(X * 100) / 100;
+      Y = Math.round(Y * 100) / 100;
       this.startX = e.touches[0].pageX;
       this.startY = e.touches[0].pageY;
       this.touchMoveCb({x:X, y:Y});

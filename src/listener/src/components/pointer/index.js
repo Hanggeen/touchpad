@@ -22,27 +22,36 @@ export default class Pointer {
 
   set(x, y) {
     if (x > 0) {
-      x = Math.round(Math.pow(1.2, x));
-      if (x > 100) {
-        x = 100;
+      if (x > 5) {
+        x = Math.round(Math.pow(1.4, x));
+        if (x > 100) {
+          x = 100;
+        }
       }
     } else {
-      x = 0 - Math.round(Math.pow(1.2, -x));
-      if (x < -100) {
-        x = -100;
+      if (x < -5) {
+        x = 0 - Math.round(Math.pow(1.4, -x));
+        if (x < -100) {
+          x = -100;
+        }
       }
     }
     if (y > 0) {
-      y = Math.round(Math.pow(1.2, y));
-      if (y > 100) {
-        y = 100;
+      if (y > 5) {
+        y = Math.round(Math.pow(1.4, y));
+        if (y > 100) {
+          y = 100;
+        }
       }
     } else {
-      y = 0 - Math.round(Math.pow(1.2, -y));
-      if (y < -100) {
-        y = -100;
+      if (y < -5) {
+        y = 0 - Math.round(Math.pow(1.4, -y));
+        if (y < -100) {
+          y = -100;
+        }
       }
     }
+    console.log(x, y);
     this.pointerX += x;
     this.pointerY += y;
     if (this.pointerX + this.pointerWidth > this.clientWidth) {
