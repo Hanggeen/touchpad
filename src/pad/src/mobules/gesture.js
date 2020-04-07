@@ -4,9 +4,11 @@ export default class Gesture {
   }
   async init() {
     let Hammer = await this.getHammer();
+    console.log(this.dom);
     const gestureDomHammer = new Hammer(this.dom, {});
     gestureDomHammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
-    gestureDomHammer.on('tap swipeleft swiperight swipeup swipedown', this.swipeHandler);
+    // gestureDomHammer.on('tap', this.swipeHandler.bind(this));
+    gestureDomHammer.on('tap swipeleft swiperight swipeup swipedown', this.swipeHandler.bind(this));
     return true;
   }
 
@@ -14,7 +16,7 @@ export default class Gesture {
     return new Promise((resolve, reject) => {
       import(/* webpackChunkName: "hammerjs" */ 'hammerjs').then(Hammer => {
         console.log('完成加载');
-        resolve(Hammer);
+        resolve(Hammer.default);
       })
     })
   }
@@ -24,6 +26,6 @@ export default class Gesture {
   }
 
   swipeHandler(msg) {
-   this.swipeCb && this.swipeCb(msg); 
+    this.swipeCb && this.swipeCb(msg); 
   }
 }
