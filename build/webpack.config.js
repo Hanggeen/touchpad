@@ -5,13 +5,12 @@ module.exports = {
   mode: 'development',
   devtool: false,
   entry: {
-    'trackpad-listener':Path.resolve(__dirname, '../src/trackpad-listener/index.js'),
-    'trackpad': Path.resolve(__dirname, '../src/trackpad/index.js'),
-    'pad': Path.resolve(__dirname, '../src/pad/index.js')
+    'pad': Path.resolve(__dirname, '../src/pad/index.js'),
+    'listener': Path.resolve(__dirname, '../src/listener/index.js'),
   },
   output: {
-    path: Path.resolve(__dirname, '../dist'),
-    filename: '[name].[hash].js',
+    path: Path.resolve(__dirname, '../public/'),
+    filename: './touchpad/[name].js',
     chunkFilename: '[name].bundle.js',
     library: '',
     libraryTarget: 'window',
@@ -33,15 +32,15 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Trackpad',
-      filename: 'trackpad.html',
-      template: 'src/trackpad/index.html',
-      chunks: ['trackpad']
+      title: 'listener',
+      filename: 'index.html',
+      template: 'src/demo/index.html',
+      chunks: ['listener']
     }),
     new HtmlWebpackPlugin({
-      title: 'Trackpad',
+      title: 'pad',
       filename: 'pad.html',
-      template: 'src/pad/public/index.html',
+      template: 'src/pad/page/index.html',
       chunks: ['pad']
     })
   ]
