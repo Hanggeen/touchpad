@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="">
+  <meta name="x5-orientation" content="portrait">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta itemprop="name" content="try"/>
+  <meta name="description" itemprop="description" content="trackpad" />
+  <meta name="keywords" content="trackpad">
+  <title>尝试</title>
+  <style type="text/css">
+    *{
+      margin: 0;
+    }
+    body {
+      padding-bottom: 200px;
+    }
+    .title {
+      background-color: #000;
+      padding: 0 10px;
+    }
+    .title h1{
+      display: block;
+      margin: 0 auto;
+      max-width: 1000px;
+      padding: 20px 0px;
+      color: #fff;
+    }
+    .main {
+      padding: 0 10px;
+      margin: 0 auto;
+      max-width: 1000px;
+    }
+    .intro {
+      margin-top: 20px;
+      font-size: 15px;
+      color: #333;
+      line-height: 3;
+    }
+    .intro h4 {
+      margin-top: 10px;
+      padding-left: 15px;
+      font-size: 15px;
+      border-left: 3px solid #333;
+      background-color: #fcfcfc;
+    }
+    .list {
+      max-width: 500px;
+      margin-top: 20px;
+      padding-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    h2 {
+      margin-top: 15px;
+      font-size: 15px;
+    }
+    .list > div{
+      justify-content: center;
+      display: flex;
+      flex: 0 0 110px;
+      margin: 2px;
+      height: 110px;
+      border: 2px solid #fff;
+      background-color: #f6f6f6;
+      align-items: center;
+    }
+    .list > div.active {
+      background-color: #ddd;
+    }
+    .list > div.hover {
+      border: 2px solid rgb(22, 132, 206);
+    }
+    @media screen and (max-width: 500px) {
+      .list div {
+        font-size: 12px;
+        flex: 0 0 20vw;
+        height: 20vw;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="title">
+    <h1>trackpad.js</h1>
+  </div>
+  <div class="main">
+    <div class="intro">
+      <h4>简介</h4>
+      <p>这是一个可以将手机当成网页遥控器的一个插件。</p>
+      <p>移动设备扫码接入，可以控制另一网页端的行为，就像一个笔记本电脑的触摸板一样</p>
+      <p>您可以在接入后进行模拟鼠标的移动、点击，以及滑动滚轮的操作</p>
+      <p>另外还添加了手势模式，支持上下左右滑动手势</p>
+      <h4>用法</h4>
+      <p>网页开发者可以引入js，按需绑定监听事件</p>
+      <p>本项目是需要后端支持，项目已包含前端代码和基本的后端代码，建议使用自己的后端环境</p>
+      <h4>尝试</h4>
+      <p>下面准备了一些小交互，你可以</p>
+      <p><b>点开右下角的悬浮框，然后用手机扫码接入信号</b></p>
+      <p><b>然后在手机页面中控制鼠标，点击其中的方块</b></p>
+    </div>
+    <div id="list" class="list">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+    var listdom = document.getElementById('list');
+    var listope = {
+      pos: 0,
+      hover: false,
+      show: function(p) {
+        var i = p || this.pos;
+        listdom.children[i].classList.add('hover')
+      },
+      hide: function(p) {
+        var i = p || this.pos;
+        listdom.children[i].classList.remove('hover')
+      },
+      left: function() {
+        if (this.pos != 0) {
+          this.hide(this.pos);this.pos--;this.show(this.pos);
+        }
+      },
+      right: function() {
+        if (this.pos != 15) {
+          this.hide(this.pos);this.pos++;this.show(this.pos);
+        }
+      },
+      up: function() {
+        if (this.pos > 3) {
+          this.hide(this.pos);this.pos -= 4;this.show(this.pos);
+        }
+      },
+      down: function() {
+        if (this.pos < 13) {
+          this.hide(this.pos);this.pos += 4;this.show(this.pos);
+        }
+      },
+      click: function() {
+        if (listdom.children[this.pos].classList.contains('active')) {
+          listdom.children[this.pos].classList.remove('active')
+        } else {
+          listdom.children[this.pos].classList.add('active')
+        }
+      }
+    }
+    listdom.onclick = function (e) {
+      if (e.target.id == '') {
+        if (e.target.classList.contains('active')) {
+          e.target.classList.remove('active')
+        } else {
+          e.target.classList.add('active')
+        }
+      }
+    }
+  </script>
+  <script>
+    var trackpad = new TrackPad({
+      wsurl: '192.168.1.100:3000',
+      pageurl: 'http://192.168.1.100:7086/pad.html'
+    })
+    trackpad.on('swipe',function(e){
+      listope[e.data]()
+    })
+    trackpad.on('change', function(e) {
+      if (e.data == 'gesture') {
+        listope.show();
+      } else {
+        listope.hide();
+      }
+    })
+  </script>
+</body>
+</html>

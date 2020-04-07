@@ -1,6 +1,5 @@
 export default class Server {
   constructor() {
-    this.work = false;
   }
   async init(url) {
     this.url = url;
@@ -42,7 +41,6 @@ export default class Server {
         console.log(msg);
         if (msg.type === 'answer' && msg.action === 'init') {
           console.log('接收到');
-          this.work = true;
           resolve(msg);
         } else {
           reject();
@@ -77,14 +75,6 @@ export default class Server {
 
   messageHandler(cb) {
     this._messageCallback = cb;
-  }
-
-  errorHandler(cb) {
-    this._errorCallback = cb;
-  }
-
-  closeHandler(cb) {
-    this._closeCallback = cb;
   }
 
 }

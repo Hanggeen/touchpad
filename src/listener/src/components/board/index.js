@@ -3,13 +3,13 @@ import {str2dom} from '../../modules/tools';
 import QRCode from 'qrcode';
 import board from './template.html';
 export default class Boarder {
-  constructor() {
+  constructor(qrcodeUrl) {
     this.dom = str2dom(board);
     document.getElementsByTagName('body')[0].appendChild(this.dom);
 
-    this._tips = document.getElementById('_touchpad_tips');
-    this._qrcode = document.getElementById('_touchpad_qrcode');
-    this._toast = document.getElementById('_touchpad_toast');
+    this._tips = document.getElementById('_trackpad_tips');
+    this._qrcode = document.getElementById('_trackpad_qrcode');
+    this._toast = document.getElementById('_trackpad_toast');
 
     this._qrcodeready = false;
     this.dom.onclick = this._onclick.bind(this);
@@ -46,20 +46,12 @@ export default class Boarder {
   }
 
   _onclick() {
-    if (this.clickCb) {
-      this.clickCb();
-    }
-  }
-
-  clickHandler(clickCb) {
-    this.clickCb = clickCb;
-  }
-
-  setQrcodeVisible(show) {
-    if (show) {
-      this._qrcode.style.display = 'block';
-    } else {
-      this._qrcode.style.display = 'none';
+    if (this._qrcodeready) {
+      if (this._qrcode.style.display === 'none') {
+        this._qrcode.style.display = 'block';
+      } else {
+        this._qrcode.style.display = 'none';
+      }
     }
   }
 

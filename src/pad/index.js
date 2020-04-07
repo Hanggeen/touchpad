@@ -1,8 +1,8 @@
 import './src/style/style.less';
 import Server from './src/mobules/server'
 import Scroller from './src/mobules/scroller'
-import Gesture from './src/mobules/gesture'
 import Toucher from './src/mobules/toucher'
+import Gesture from './src/mobules/gesture'
 import { getQuery } from './src/common/tools'
 
 (async function() {
@@ -23,29 +23,18 @@ import { getQuery } from './src/common/tools'
   }
 
   const scroller = new Scroller(document.getElementById('bar'));
+  console.log(scroller);
   scroller.listen((msg) => {
+    console.log('asddd');
     server.send({
       type: 'track',
       track: {
-        action: 'scroll',
+        action: 'srcoll',
         data: msg
       }
     })
   })
   
-
-  const gesture = new Gesture(document.getElementById('bar'));
-  gesture.listen((msg) => {
-    server.send({
-      type: 'track',
-      track: {
-        action: 'click',
-        data: msg
-      }
-    })
-  })
-  
-
   const toucher = new Toucher(document.getElementById('pad'));
   toucher.listen((msg) => {
     server.send({
@@ -57,19 +46,34 @@ import { getQuery } from './src/common/tools'
     })
   })
 
-  // toucher.listenClick((msg) => {
-  //   server.send({
-  //     type: 'track',
-  //     track: {
-  //       action: 'click',
-  //       data: msg
-  //     }
-  //   })
-  // })
+  toucher.listenClick((msg) => {
+    console.log(3);
+    server.send({
+      type: 'track',
+      track: {
+        action: 'click',
+        data: msg
+      }
+    })
+  })
 
   server.messageHandler((msg) => {
     // 
   })
+
+  if (res.gesture) {
+    const gesture = new Gesture(document.getElementById('bar'));
+    await gesture.init();
+    gesture.listen((msg) => {
+      server.send({
+        type: 'track',
+        track: {
+          action: 'gesture',
+          data: msg
+        }
+      })
+    })
+  }
 
 })().catch(err => {
   console.log(err);

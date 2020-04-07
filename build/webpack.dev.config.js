@@ -1,14 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path');
-const {getIPAdress} = require('./tools');
-const localIPAdress = getIPAdress();
+
 module.exports = {
   mode: 'development',
   devtool: false,
   entry: {
+    'trackpad-listener':path.resolve(__dirname, '../src/trackpad-listener/index.js'),
+    'trackpad': path.resolve(__dirname, '../src/trackpad/index.js'),
     'pad': path.resolve(__dirname, '../src/pad/index.js'),
-    'listener': path.resolve(__dirname, '../src/listener/index.js'),
-    'demo': path.resolve(__dirname, '../src/demo/index.js'),
+    'listener': path.resolve(__dirname, '../src/listener/index.js')
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -29,31 +29,33 @@ module.exports = {
       {
         test: /(\.less$|\.css$)/,
         loader: 'style-loader!css-loader!less-loader'
-      },
-      {
-        test: /\.(png|jpg|gif|svg)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192
-            }
-          }]
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
+      title: 'Trackpad',
+      filename: 'trackpad.html',
+      template: 'src/trackpad/index.html',
+      chunks: ['trackpad'],
+      inject: true
+    }),
+    new HtmlWebpackPlugin({
+      title: 'TrackpadListen',
+      filename: 'trackpad-listener.html',
+      template: 'src/trackpad-listener/index.html',
+    }),
+    new HtmlWebpackPlugin({
       title: 'Pad',
       filename: 'pad.html',
-      template: 'src/pad/page/index.html',
+      template: 'src/pad/public/index.html',
       chunks: ['pad']
     }),
     new HtmlWebpackPlugin({
-      title: 'demo',
+      title: 'Listener',
       filename: 'index.html',
-      template: 'src/demo/index.html',
-      chunks: ['demo']
+      template: 'src/listener/index.html',
+      chunks: ['listener']
     })
   ],
   devServer: {
@@ -62,7 +64,7 @@ module.exports = {
     contentBase: false,
     compress: true,
     port:7086,
-    host:localIPAdress,
+    host:'0.0.0.0',
     open: false,
     watchOptions: {
       poll: false,

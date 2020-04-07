@@ -1,0 +1,66 @@
+#_trackpad {
+  z-index: 999998;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
+  width: 128px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  background-color: #74bac7;
+}
+#_trackpad_tips {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  bottom: 10px;
+  right: 10px;
+  width: 128px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 12px;
+  background-color: #74bac7;
+}
+#_trackpad_qrcode {
+  position: absolute;
+  top: -140px;
+  left: 0px;
+  width: 128px;
+  height: 128px;
+  background-color: #fff;
+}
+#_trackpad_toast {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 128px;
+  height: 40px;
+  border-radius: 5px;
+  color: #fff;
+  z-index: -1;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: transform 1s;
+  -moz-transition: transform 1s; /* Firefox 4 */
+  -webkit-transition: transform 1s; /* Safari 和 Chrome */
+  -o-transition: transform 1s;
+  transform: translate3d(0px, 0px, 0px);
+  -ms-transform: translate3d(0px, 0px, 0px); /* IE 9 */
+  -moz-transform: translate3d(0px, 0px, 0px); /* Firefox */
+  -webkit-transform: translate3d(0px, 0px, 0px); /* Safari 和 Chrome */
+  -o-transform: translate3d(0px, 0px, 0px);
+}
+#_trackpad_toast.active {
+  transform: translate3d(-135px, 0px, 0px);
+  -ms-transform: translate3d(-135px, 0px, 0px); /* IE 9 */
+  -moz-transform: translate3d(-135px, 0px, 0px); /* Firefox */
+  -webkit-transform: translate3d(-135px, 0px, 0px); /* Safari 和 Chrome */
+  -o-transform: translate3d(-135px, 0px, 0px);
+}
