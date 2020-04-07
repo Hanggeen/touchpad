@@ -1,10 +1,15 @@
+
+import Hammer from 'hammerjs';
 export default class Toucher {
   constructor(dom) {
     this.dom = dom;
     console.log(dom);
     this.dom.addEventListener("touchstart", this.touchStart.bind(this));
     this.dom.addEventListener("touchmove", this.touchMove.bind(this));
-    this.dom.addEventListener("click", this.click.bind(this));
+    // this.dom.addEventListener("click", this.click.bind(this));
+    const gestureDomHammer = new Hammer(this.dom, {});
+    gestureDomHammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
+    gestureDomHammer.on('tap', this.click.bind(this));
     this.touchMoveCb = null;
   }
   
@@ -29,7 +34,6 @@ export default class Toucher {
   }
 
   click(cb) {
-    console.log(1);
     if (this.clickCb) {
       this.clickCb();
     }

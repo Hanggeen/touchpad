@@ -34,13 +34,13 @@ import { getQuery } from './src/common/tools'
   })
   
 
-  const gesture = new Gesture(document.getElementById('bar'));
+  const gesture = new Gesture(document.getElementById('gesturepad'));
   gesture.listen((msg) => {
+    console.log(msg)
     server.send({
       type: 'track',
       track: {
-        action: 'click',
-        data: msg
+        action: msg.type
       }
     })
   })
@@ -57,15 +57,15 @@ import { getQuery } from './src/common/tools'
     })
   })
 
-  // toucher.listenClick((msg) => {
-  //   server.send({
-  //     type: 'track',
-  //     track: {
-  //       action: 'click',
-  //       data: msg
-  //     }
-  //   })
-  // })
+  toucher.listenClick((msg) => {
+    server.send({
+      type: 'track',
+      track: {
+        action: 'click',
+        data: msg
+      }
+    })
+  })
 
   server.messageHandler((msg) => {
     // 
