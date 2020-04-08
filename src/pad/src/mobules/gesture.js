@@ -17,7 +17,6 @@ export default class Gesture {
   }
 
   swipeHandler(msg) {
-    console.log(msg);
     this.swipeCb && this.swipeCb(msg); 
   }
 

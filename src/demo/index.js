@@ -1,15 +1,38 @@
 import './style/style.css';
-import point from './pointer';
-import puzzle from './puzzle';
-import timer from './timer';
-window.onload = function () {
-  new Touchbar({
-    host: `${window.location.hostname}:3000`
-  });
-}
+import point from './modules/pointer';
+import puzzle from './modules/puzzle';
+import timer from './modules/timer';
+
+const touchpad = new Touchpad({
+  host: `${window.location.hostname}:3000`
+});
+
+let gestureOpen = false;
+touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'], function(msg){
+  if (msg.track && msg.track.action === 'switch') {
+    if (msg.track.data === 'gesture') {
+      point.show();
+      gestureOpen = true;
+    } else {
+      gestureOpen = false;
+    }
+    return;
+  }
+
+  if (!gestureOpen) {
+    return;
+  }
+
+  if (['swipeleft','swiperight','swipeup','swipedown'].indexOf(msg.track.action) !== -1) {
+    point.set(msg.track.action.slice(5));
+    return;
+  }
 
 
-window.puzzle = puzzle;
+
+})
+
+window.point = point;
 
 let gameStatus = 'ready'; // ready,playing,stop
 

@@ -15,7 +15,6 @@ export default class Server {
     this.ws.onerror = this._onerror.bind(this);
     this.ws.onclose = this._onclose.bind(this);
 
-    console.log(this.code);
     let register = await this._register().catch();
     if (!register) {
       console.log(`[${code}]发起注册失败`);
@@ -39,9 +38,7 @@ export default class Server {
     return new Promise((resolve, reject) => {
       this._registerCallback = (msg) => {
         this._registerCallback = null;
-        console.log(msg);
         if (msg.type === 'answer' && msg.action === 'init') {
-          console.log('接收到');
           resolve(msg.status);
         } else {
           reject();
@@ -66,8 +63,6 @@ export default class Server {
   }
 
   _onmessage(message) {
-    console.log('接收到返回');
-    console.log(this._registerCallback);
     const msg = JSON.parse(message.data);
     this._registerCallback && this._registerCallback(msg);
     this._messageCallback && this._messageCallback(msg);

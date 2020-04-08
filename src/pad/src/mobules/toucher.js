@@ -3,12 +3,11 @@ import Hammer from 'hammerjs';
 export default class Toucher {
   constructor(dom) {
     this.dom = dom;
-    console.log(dom);
     this.dom.addEventListener("touchstart", this.touchStart.bind(this));
     this.dom.addEventListener("touchmove", this.touchMove.bind(this));
     const gestureDomHammer = new Hammer(this.dom, {});
     gestureDomHammer.on('tap', this.click.bind(this));
-    this.touchMoveCb = null;
+    this.touchCb = null;
   }
   
   // 开始触摸时，记住标记位置
@@ -19,7 +18,7 @@ export default class Toucher {
 
   // 滑动时，设置标记位置、计算差值、发送事件
   touchMove(e) {
-    if (this.touchMoveCb) {
+    if (this.touchCb) {
       let X, Y;
       X = e.touches[0].pageX - this.startX;
       Y = e.touches[0].pageY - this.startY;
@@ -27,23 +26,23 @@ export default class Toucher {
       Y = Math.round(Y * 100) / 100;
       this.startX = e.touches[0].pageX;
       this.startY = e.touches[0].pageY;
-      this.touchMoveCb({x:X, y:Y});
+      this.touchCb({
+        action: 'touch',
+        data: {x:X, y:Y}
+      });
     }
   }
 
   click() {
-    if (this.clickCb) {
-      this.clickCb();
+    if (this.touchCb) {
+      this.touchCb({
+        action: 'click'
+      });
     }
   }
 
   listen(cb) {
-    this.touchMoveCb = cb;
-  }
-
-  listenClick(cb) {
-    console.log(2);
-    this.clickCb = cb;
+    this.touchCb = cb;
   }
 
   show() {

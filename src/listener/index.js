@@ -3,7 +3,7 @@ import Scroller from './src/modules/scroller';
 import Boarder from './src/components/board/';
 import Server from './src/modules/server';
 
-class Touchbar {
+class Touchpad {
   /**
    * 构造函数
    * @param {Object} config 
@@ -24,6 +24,9 @@ class Touchbar {
         this.board.initQrcode(`${window.location.protocol}//${window.location.host}/pad.html?ws=${this.url}&co=${res.data}`);
       }
     })
+
+    this.listenType = [];
+    this.listenCb = null;
 
     this.board.clickHandler(() => {
       if (server.work) {
@@ -48,8 +51,7 @@ class Touchbar {
         if (msg.track.action === "click") {
           this.pointer.click();
         }
-      }
-      if (msg.type === 'msg') {
+      } else if (msg.type === 'msg') {
         if (msg.action === 'join') {
           this.board.toast('新建立连接');
           this.board.setQrcodeVisible(false);
@@ -63,6 +65,10 @@ class Touchbar {
           this.pointer.hide();
         }
       }
+      if (msg.type === 'track' && this.listenType.indexOf(msg.track.action) !== -1) {
+        this.listenCb && this.listenCb(msg);
+      }
+
     });
 
     server.errorHandler(err => {
@@ -79,6 +85,11 @@ class Touchbar {
       this.pointer.hide();
     });
   }
+
+  listen(type, cb) {
+    this.listenType = type;
+    this.listenCb = cb;
+  }
 }
 
-export {Touchbar}
+export {Touchpad}

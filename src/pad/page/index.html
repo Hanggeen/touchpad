@@ -5,24 +5,22 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
     <link rel="icon" href="./favicon.ico" />
-    <title>Touch Pad!</title>
+    <title>Touch Pad 👆</title>
   </head>
   <body>
     <noscript>
       <strong>We're sorry but fe doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
     </noscript>
-    <div id="main">
+    <div class="main">
       <div class="control">
         <div id="mouse" class="btn active">鼠标</div>
         <div id="gesture" class="btn">手势</div>
       </div>
-      <div id="tips" class="hide">tips</div>
+      <div id="tips" class="tips">tips</div>
       <div class="area">
-        <div id="mousearea">
-          <div id="pad"><p class="center">滑动光标</p></div>
-          <div id="gesturepad" style="display: none;"><p class="center">滑动手势</p></div>
-          <div id="bar"><p>上<br>下<br>滚<br>动</p></div>
-        </div>
+        <div id="touch-pad" class="pad"><p class="center">滑动光标</p></div>
+        <div id="gesture-pad" class="pad" style="display: none;"><p class="center">滑动手势</p></div>
+        <div id="bar" class="bar"><p>上<br>下<br>滚<br>动</p></div>
       </div>
     </div>
     <!-- built files will be auto injected -->

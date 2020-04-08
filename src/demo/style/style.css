@@ -75,6 +75,7 @@ h2 {
   width: 150px;
   height: 150px;
   border: 8px solid red;
+  transition: transform 0.3s;
 }
 .game > .control {
   flex: 0 0 150px;
