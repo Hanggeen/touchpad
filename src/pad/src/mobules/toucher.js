@@ -6,9 +6,7 @@ export default class Toucher {
     console.log(dom);
     this.dom.addEventListener("touchstart", this.touchStart.bind(this));
     this.dom.addEventListener("touchmove", this.touchMove.bind(this));
-    // this.dom.addEventListener("click", this.click.bind(this));
     const gestureDomHammer = new Hammer(this.dom, {});
-    gestureDomHammer.get('swipe').set({ direction: Hammer.DIRECTION_ALL });
     gestureDomHammer.on('tap', this.click.bind(this));
     this.touchMoveCb = null;
   }
@@ -33,7 +31,7 @@ export default class Toucher {
     }
   }
 
-  click(cb) {
+  click() {
     if (this.clickCb) {
       this.clickCb();
     }
@@ -46,5 +44,13 @@ export default class Toucher {
   listenClick(cb) {
     console.log(2);
     this.clickCb = cb;
+  }
+
+  show() {
+    this.dom.style.display = 'block';
+  }
+
+  hide() {
+    this.dom.style.display = 'none';
   }
 }

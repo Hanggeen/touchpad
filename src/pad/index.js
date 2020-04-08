@@ -3,6 +3,7 @@ import Server from './src/mobules/server'
 import Scroller from './src/mobules/scroller'
 import Gesture from './src/mobules/gesture'
 import Toucher from './src/mobules/toucher'
+import controls from './src/mobules/controls'
 import { getQuery } from './src/common/tools'
 
 (async function() {
@@ -70,6 +71,26 @@ import { getQuery } from './src/common/tools'
   server.messageHandler((msg) => {
     // 
   })
+
+  controls.listen((select) => {
+    if (select == 'gesture') {
+      gesture.show();
+      toucher.hide();
+    }
+    if (select == 'mouse') {
+      gesture.hide();
+      toucher.show();
+    }
+
+    server.send({
+      type: 'track',
+      msg: {
+        action: 'switch',
+        data: select
+      }
+    })
+  })
+
 
 })().catch(err => {
   console.log(err);
