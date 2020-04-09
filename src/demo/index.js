@@ -10,6 +10,7 @@ const touchpad = new Touchpad({
 
 let gestureOpen = false;
 touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'], function(msg){
+  console.log(msg.track.action)
   if (msg.track && msg.track.action === 'switch') {
     if (msg.track.data === 'gesture') {
       point.show();
@@ -25,11 +26,30 @@ touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'],
   }
 
   if (['swipeleft','swiperight','swipeup','swipedown'].indexOf(msg.track.action) !== -1) {
+    console.log('准备执行set');
     point.set(msg.track.action.slice(5));
     return;
   }
 
-
+  if (msg.track.action === 'tap') {
+    let posxy = point.get();
+    console.log(posxy)
+    if (String(posxy) === String([0,0])) {
+      // 开始按钮
+      startGame();
+    } else if (String(posxy) === String([1,0])) {
+      // 暂停按钮
+      stopGame();
+    } else if (String(posxy) === String([2,0])) {
+      // 恢复按钮
+      restartGame();
+    } else {
+      let x = posxy[1] - 1;
+      let y = posxy[0]
+      let posindex = y * 3 + x;
+      puzzle.pick(posindex);
+    }
+  }
 
 })
 
@@ -41,7 +61,7 @@ let startBtn = document.getElementById('start');
 
 
 
-startBtn.onclick = function(){
+function startGame(){
   if (gameStatus === 'ready') {
     gameStatus = 'playing';
     timer.reset();
@@ -53,14 +73,18 @@ startBtn.onclick = function(){
     puzzle.recover();
   }
 }
-document.getElementById('stop').onclick = function(){
+startBtn.onclick = startGame;
+
+function stopGame(){
   if (gameStatus === 'playing') {
     gameStatus = 'stop';
     timer.stop();
     puzzle.stop();
   }
 }
-document.getElementById('restart').onclick = function(){
+document.getElementById('stop').onclick = stopGame;
+
+function restartGame(){
   if (gameStatus === 'playing') {
     gameStatus = 'ready';
     timer.reset();
@@ -73,6 +97,7 @@ document.getElementById('restart').onclick = function(){
     puzzle.reset();  
   }
 }
+document.getElementById('restart').onclick = restartGame;
 
 puzzle.success(() => {
   gameStatus = 'ready';

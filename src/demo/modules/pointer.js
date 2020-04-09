@@ -16,6 +16,7 @@ class Pointer {
     this.pointer.style.display = 'none';
   }
   set(pos) {
+    console.log(this.pointerXY);
     if (pos === 'left' && this.pointerXY[1] > 0) {
       this.pointerXY[1] -= 1;
     }
@@ -30,6 +31,7 @@ class Pointer {
     }
     let xy = this.pointerLocation[this.pointerXY[0]][this.pointerXY[1]];
     this.pointer.style.transform = `translate(${xy[0]}px,${xy[1]}px)`;
+    console.log(this.pointerXY);
   }
   get() {
     return this.pointerXY;
