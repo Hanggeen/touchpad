@@ -4,7 +4,8 @@ import puzzle from './modules/puzzle';
 import timer from './modules/timer';
 
 const touchpad = new Touchpad({
-  host: `${window.location.hostname}:3000`
+  host: `${window.location.hostname}:3000`,
+  trackType: 'gesture'
 });
 
 let gestureOpen = false;

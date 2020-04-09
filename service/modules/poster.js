@@ -50,10 +50,13 @@ module.exports = class Poster{
       
     }
 
+    let config = STORE.getConf(code);
+
     STORE.send(code, 'poster', {
       type: 'answer',
       action: 'init',
-      status: 'ok'
+      status: 'ok',
+      data: config
     });
     
     STORE.send(code, 'listener', {

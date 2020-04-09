@@ -21,7 +21,7 @@ export default class Server {
       return;
     }
 
-    return true;
+    return register;
 
   }
 
@@ -39,7 +39,7 @@ export default class Server {
       this._registerCallback = (msg) => {
         this._registerCallback = null;
         if (msg.type === 'answer' && msg.action === 'init') {
-          resolve(msg.status);
+          resolve(msg);
         } else {
           reject();
         }

@@ -7,19 +7,22 @@ class Touchpad {
   /**
    * 构造函数
    * @param {Object} config 
-   * config.gesture {boolean} false
+   * config.trackType {boolean} false
    */
   constructor(config = {}) {
     this.url = config.host || `${window.location.protocol}${window.location.host}`;
-    this.gesture = config.gesture || false;
+    this.trackType = config.trackType || 'mouse';
 
     this.pointer = new Pointer();
     this.scroller = new Scroller();
     this.board = new Boarder();
 
     const wsurl = document.location.protocol === 'https:' ? `wss://${this.url}/listener` : `ws://${this.url}/listener`;
-    const server = new Server(wsurl);
-    server.init(wsurl).then(res => {
+    const server = new Server({
+      url: wsurl,
+      trackType: this.trackType
+    });
+    server.init().then(res => {
       if (res) {
         this.board.initQrcode(`${window.location.protocol}//${window.location.host}/pad.html?ws=${this.url}&co=${res.data}`);
       }
@@ -50,6 +53,9 @@ class Touchpad {
         }
         if (msg.track.action === "click") {
           this.pointer.click();
+        }
+        if (msg.track.action === 'switch') {
+          msg.track.data === 'mouse' ? this.pointer.show() : this.pointer.hide();
         }
       } else if (msg.type === 'msg') {
         if (msg.action === 'join') {

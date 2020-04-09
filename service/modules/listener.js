@@ -28,6 +28,7 @@ module.exports = class Listener{
     console.log(`[${code}]接收到监听器注册`);
 
     STORE.set(code, 'listener', this.ws);
+    STORE.setConf(code, msg.data);
     STORE.send(code, 'listener', {
       type: 'answer',
       action: 'init',

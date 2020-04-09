@@ -7,6 +7,7 @@ import Toucher from './src/mobules/toucher'
 import controls from './src/mobules/controls'
 import tips from './src/mobules/tips'
 import { getQuery } from './src/common/tools'
+import pointer from '../demo/modules/pointer';
 
 (async function() {
   let url = getQuery('ws');
@@ -81,6 +82,16 @@ import { getQuery } from './src/common/tools'
     }
   })
   
+
+  if (res.data.trackType === 'mouse') {
+    toucher.show();
+    gesture.hide();
+  }
+  if (res.data.trackType === 'gesture') {
+    toucher.hide();
+    gesture.show();
+  }
+
   // 切换面板监听
   controls.listen((select) => {
     select === 'gesture' ? gesture.show() : gesture.hide();

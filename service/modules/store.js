@@ -3,6 +3,20 @@ class Store {
     this.controls = {}
   }
 
+  setConf(code, config) {
+    if (this.controls[code]) {
+      this.controls[code].config = config;
+    }
+  }
+
+  getConf(code) {
+    if (this.controls[code] && this.controls[code].config) {
+      return this.controls[code].config;
+    } else {
+      return {}
+    }
+  }
+
   set(code, type, ws) {
     console.log(Object.keys(this.controls));
     if (type === 'listener' && this.controls[code]) {
