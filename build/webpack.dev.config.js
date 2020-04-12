@@ -1,12 +1,14 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path');
-
+const {getIPAdress} = require('./tools');
+const localIPAdress = getIPAdress();
 module.exports = {
   mode: 'development',
   devtool: false,
   entry: {
-    'trackpad-listener':path.resolve(__dirname, '../src/trackpad-listener/index.js'),
-    'trackpad': path.resolve(__dirname, '../src/trackpad/index.js')
+    'pad': path.resolve(__dirname, '../src/pad/index.js'),
+    'listener': path.resolve(__dirname, '../src/listener/index.js'),
+    'demo': path.resolve(__dirname, '../src/demo/index.js'),
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -15,6 +17,7 @@ module.exports = {
     libraryTarget: 'window',
     umdNamedDefine: true
   },
+  devtool: 'source-map',
   module: {
     rules: [
       {
@@ -26,23 +29,31 @@ module.exports = {
       {
         test: /(\.less$|\.css$)/,
         loader: 'style-loader!css-loader!less-loader'
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192
+            }
+          }]
       }
     ]
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Trackpad',
-      filename: 'trackpad.html',
-      template: 'src/trackpad/index.html',
-      chunks: ['trackpad'],
-      inject: true
+      title: 'Pad',
+      filename: 'pad.html',
+      template: 'src/pad/page/index.html',
+      chunks: ['pad']
     }),
     new HtmlWebpackPlugin({
-      title: 'TrackpadListen',
-      filename: 'trackpad-listener.html',
-      template: 'src/trackpad-listener/index.html',
-      chunks: ['trackpad-listener'],
-      inject: 'head'
+      title: 'demo',
+      filename: 'index.html',
+      template: 'src/demo/index.html',
+      chunks: ['demo']
     })
   ],
   devServer: {
@@ -51,7 +62,7 @@ module.exports = {
     contentBase: false,
     compress: true,
     port:7086,
-    host:'0.0.0.0',
+    host:localIPAdress,
     open: false,
     watchOptions: {
       poll: false,

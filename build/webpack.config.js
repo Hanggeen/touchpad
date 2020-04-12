@@ -1,16 +1,17 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 var Path = require('path');
 
 module.exports = {
   mode: 'development',
   devtool: false,
   entry: {
-    'trackpad-listener':Path.resolve(__dirname, '../src/trackpad-listener/index.js'),
-    'trackpad': Path.resolve(__dirname, '../src/trackpad/index.js')
+    'pad': Path.resolve(__dirname, '../src/pad/index.js'),
+    'listener': Path.resolve(__dirname, '../src/listener/index.js'),
   },
   output: {
-    path: Path.resolve(__dirname, '../dist'),
-    filename: '[name].min.js',
+    path: Path.resolve(__dirname, '../public/'),
+    filename: './touchpad/[name].js',
+    chunkFilename: '[name].bundle.js',
     library: '',
     libraryTarget: 'window',
     umdNamedDefine: true
@@ -31,10 +32,16 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Trackpad',
-      filename: 'trackpad.html',
-      template: 'src/trackpad/index.html',
-      chunks: ['trackpad']
+      title: 'listener',
+      filename: 'index.html',
+      template: 'src/demo/index.html',
+      chunks: ['listener']
+    }),
+    new HtmlWebpackPlugin({
+      title: 'pad',
+      filename: 'pad.html',
+      template: 'src/pad/page/index.html',
+      chunks: ['pad']
     })
   ]
 };
