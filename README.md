@@ -1,38 +1,32 @@
 # trackpad
+### 想法
+本项目初衷，是解决公共屏幕操作接入问题。
+
+相信很多公司都有一些向客户展示的数据平台，通常这些数据平台都不是个人电脑，而是专用的展示大屏。
+
+很多时候，这种大屏幕并不是触屏的，对应的鼠标键盘等输入设备，也不会在方便操控的地方。
+
+因此，在介绍展示内容时，如果需要针对性地选择、切换数据操作，似乎缺少一些优雅便捷的方式。
+
 ### 简介
-这是一个可以将手机当成网页遥控器的一个插件。
 
-移动设备扫码接入，可以控制另一网页端的行为，就像一个笔记本电脑的触摸板一样
+如果你不想花太多时间解决上面的问题，你可以试试我这个简单的方案：
 
-您可以在接入后进行模拟鼠标的移动、点击，以及滑动滚轮的操作
+部署本项目
 
-另外还添加了手势模式，支持上下左右滑动手势
-### 用法
-#### 引入
-``` html
-<script src="....trackpad.min.js"></script>
+在展示页面的网页，嵌入本服务提供的js文件，并执行相应的初始化操作
+
+如果一切正常，你的展示页面右下角会出现一个二维码
+
+通过手机扫码，可以接入对应页面的操作，包括移动鼠标、点击、滚动等操作。
+
+(注：模拟鼠标暂时无法与原生表单组件交互)
+
+### 部署
+
+clone本项目
+
 ```
-#### 注册
-``` javascript
-var trackpad = new TrackPad({
-  wsurl: '127.0.0.1:3000', // WebSocket服务地址，可替换
-  pageurl: 'http://127.0.0.1:7086/trackpad.html' //触摸板页面地址，可替换
-})
-trackpad.on('click',function(e){
-  console.log(e)
-})
-trackpad.on('swipe',function(e){
-  console.log(e)
-})
-trackpad.on('change', function(e) {
-  console.log(e)
-})
+> npm install
+> node service/index.js
 ```
-#### 服务端开启
-``` javascript
-node server/index.js
-```
-### 在线Demo
-点击[Demo](https://niamoi.com/trackpad/)
-##### 注意
-目前在不定期修复Bug和升级，欢迎提出建议
