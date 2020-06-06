@@ -3,19 +3,21 @@ import point from './modules/pointer';
 import puzzle from './modules/puzzle';
 import timer from './modules/timer';
 
+// 实例化touch pad 默认为gesture方式
 const touchpad = new Touchpad({
   host: `${window.location.hostname}:3000`,
   trackType: 'gesture'
 });
 
+// 接应手势信号并处理
 let gestureOpen = false;
 touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'], function(msg){
-  console.log(msg.track.action)
   if (msg.track && msg.track.action === 'switch') {
     if (msg.track.data === 'gesture') {
       point.show();
       gestureOpen = true;
     } else {
+      point.hide();
       gestureOpen = false;
     }
     return;
@@ -26,14 +28,12 @@ touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'],
   }
 
   if (['swipeleft','swiperight','swipeup','swipedown'].indexOf(msg.track.action) !== -1) {
-    console.log('准备执行set');
     point.set(msg.track.action.slice(5));
     return;
   }
 
   if (msg.track.action === 'tap') {
     let posxy = point.get();
-    console.log(posxy)
     if (String(posxy) === String([0,0])) {
       // 开始按钮
       startGame();
@@ -53,14 +53,8 @@ touchpad.listen(['tap','swipeleft','swiperight','swipeup','swipedown','switch'],
 
 })
 
-window.point = point;
-
+// 游戏控制中心
 let gameStatus = 'ready'; // ready,playing,stop
-
-let startBtn = document.getElementById('start');
-
-
-
 function startGame(){
   if (gameStatus === 'ready') {
     gameStatus = 'playing';
@@ -73,7 +67,7 @@ function startGame(){
     puzzle.recover();
   }
 }
-startBtn.onclick = startGame;
+document.getElementById('start').addEventListener('click', startGame, false);
 
 function stopGame(){
   if (gameStatus === 'playing') {
@@ -82,7 +76,7 @@ function stopGame(){
     puzzle.stop();
   }
 }
-document.getElementById('stop').onclick = stopGame;
+document.getElementById('stop').addEventListener('click', stopGame, false);
 
 function restartGame(){
   if (gameStatus === 'playing') {
@@ -97,12 +91,10 @@ function restartGame(){
     puzzle.reset();  
   }
 }
-document.getElementById('restart').onclick = restartGame;
+document.getElementById('restart').addEventListener('click', restartGame, false);
 
 puzzle.success(() => {
   gameStatus = 'ready';
-  timer.stop();
-  puzzle.stop();
-  let a = document.getElementById('time').innerHTML;
-  document.getElementById('time').innerHTML = '完成啦！耗时' + a;
+  timer.finish();
+  puzzle.end();
 })

@@ -34,6 +34,10 @@ class Timer {
     clearInterval(this.timer);
     this.timetips.innerHTML = '00:00:00';
   }
+  finish() {
+    this.stop();
+    this.timetips.innerHTML = '完成啦！耗时' + this.timetips.innerHTML;
+  }
 }
 
 export default new Timer();

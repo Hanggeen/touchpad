@@ -106,7 +106,7 @@ h2 {
   width: 150px;
   height: 150px;
   box-shadow: 3px 3px 4px rgba(0,0,0,.5);
-  background-image: url('../images/animal.png');
+  background-image: url('../images/games.png');
   background-size: 300% 300%;
   transition: transform 1s;
 }
