@@ -22,7 +22,6 @@ export default class Server {
       console.log(`[${code}]发起注册失败`);
       return;
     }
-    console.log(register);
     return register;
 
   }

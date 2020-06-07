@@ -53,7 +53,7 @@ module.exports = {
       title: 'demo',
       filename: 'index.html',
       template: 'src/demo/index.html',
-      chunks: ['demo']
+      chunks: ['listener', 'demo']
     })
   ],
   devServer: {

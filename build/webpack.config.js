@@ -7,6 +7,7 @@ module.exports = {
   entry: {
     'pad': Path.resolve(__dirname, '../src/pad/index.js'),
     'listener': Path.resolve(__dirname, '../src/listener/index.js'),
+    'demo': Path.resolve(__dirname, '../src/demo/index.js')
   },
   output: {
     path: Path.resolve(__dirname, '../public/'),
@@ -27,6 +28,17 @@ module.exports = {
       {
         test: /(\.less$|\.css$)/,
         loader: 'style-loader!css-loader!less-loader'
+      },
+      {
+        test: /\.(png|jpg|gif|svg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 8192,
+              outputPath: './images'
+            }
+          }]
       }
     ]
   },
@@ -35,7 +47,7 @@ module.exports = {
       title: 'listener',
       filename: 'index.html',
       template: 'src/demo/index.html',
-      chunks: ['listener']
+      chunks: ['demo','listener']
     }),
     new HtmlWebpackPlugin({
       title: 'pad',

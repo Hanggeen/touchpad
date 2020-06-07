@@ -3,10 +3,10 @@ import point from './modules/pointer';
 import puzzle from './modules/puzzle';
 import timer from './modules/timer';
 
-// 实例化touch pad 默认为gesture方式
+// 实例化touch pad 默认为mouse方式
 const touchpad = new Touchpad({
   host: `${window.location.hostname}:3000`,
-  trackType: 'gesture'
+  trackType: 'mouse'
 });
 
 // 接应手势信号并处理

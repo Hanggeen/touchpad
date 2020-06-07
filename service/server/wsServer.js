@@ -14,7 +14,6 @@ class Server {
         new Poster(ws);
       }
     });
-    console.log('websocket已准备');
   }
 }
 
