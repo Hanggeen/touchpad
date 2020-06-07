@@ -1,82 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="icon" href="./favicon.ico" />
-    <title>Touch Pad!</title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but fe doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="main" style="width:200px;height: 200px;background-color: #dddddd;" onclick="alert('s')">
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="">
+  <meta name="x5-orientation" content="portrait">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta content="telephone=no" name="format-detection">
+  <meta content="email=no" name="format-detection">
+  <meta itemprop="name" content="try"/>
+  <meta name="description" itemprop="description" content="touchpad" />
+  <meta name="keywords" content="touchpad">
+  <title>Touch Pad 👆</title>
+</head>
+<body>
+  <div class="title">
+    <h1>touchpad.js</h1>
+  </div>
+  <div class="main">
+    <div class="intro">
+      <h4>想法</h4>
+      <p>本项目初衷，是解决公共屏幕操作接入问题。</p>
+      <p>相信很多公司都有一些向客户展示的数据平台，通常这些数据平台都不是个人电脑，而是专用的展示大屏。</p>
+      <p>很多时候，这种大屏幕并不是触屏的，对应的鼠标键盘等输入设备，也不会在方便操控的地方。</p>
+      <p>因此，在介绍展示内容时，如果需要针对性地选择、切换数据操作，似乎缺少一些优雅便捷的方式。</p>
+      <h4>简介</h4>
+      <p>如果你不想花太多时间解决上面的问题，你可以试试我这个简单的方案：</p>
+      <p>部署本项目</p>
+      <p>在展示页面的网页，嵌入本服务提供的js文件，并执行相应的初始化操作</p>
+      <p>如果一切正常，你的展示页面右下角会出现一个二维码</p>
+      <p>通过手机扫码，可以接入对应页面的操作，包括移动鼠标、点击、滚动等操作。</p>
+      <p>(注：模拟鼠标暂时无法与原生表单组件交互)</p>
+      <h4>尝试</h4>
+      <p>下面准备了一个小游戏</p>
+      <div id="time" class="time">00:00:00</div>
+      <div class="game">
+        <div id="pointer" class="pointer" style="display: none;"></div>
+        <div class="control">
+          <div id="start">开始</div>
+          <div id="stop">暂停</div>
+          <div id="restart">恢复</div>
+        </div>
+        <div id="area" class="area">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
     </div>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <h1>11</h1>
-    <!-- built files will be auto injected -->
-    <script>
-      window.onload = function() {
-        new Touchbar({
-          host: '192.168.1.102:3000'
-        });
-      }
-    </script>
-  <script type="text/javascript" src="./touchpad/listener.js"></script></body>
+  </div>
+  <!-- <script src="./listener.min.js"></script> -->
+<script type="text/javascript" src="./touchpad/listener.js"></script><script type="text/javascript" src="./touchpad/demo.js"></script></body>
 </html>

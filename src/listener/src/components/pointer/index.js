@@ -10,6 +10,7 @@ export default class Pointer {
     this.pointerY = this.clientHeight/2;
     document.getElementsByTagName('body')[0].appendChild(this.dom);
     this.dom.style.transform = `translate3d(${this.pointerX }px,${this.pointerY}px,0)`;
+    this.pointerWidth = 17;
   }
 
   show() {
@@ -51,7 +52,6 @@ export default class Pointer {
         }
       }
     }
-    console.log(x, y);
     this.pointerX += x;
     this.pointerY += y;
     if (this.pointerX + this.pointerWidth > this.clientWidth) {

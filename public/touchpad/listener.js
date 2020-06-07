@@ -2090,7 +2090,7 @@ function isnan(val) {
 
 exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "#_trackpad {\n  cursor: pointer;\n  z-index: 999998;\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  bottom: 10px;\n  right: 10px;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  font-size: 12px;\n  background-color: #74bac7;\n}\n#_trackpad_tips {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  bottom: 10px;\n  right: 10px;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  font-size: 12px;\n  background-color: #74bac7;\n}\n#_trackpad_qrcode {\n  position: absolute;\n  top: -140px;\n  left: 0px;\n  width: 128px;\n  height: 128px;\n  background-color: #fff;\n}\n#_trackpad_toast {\n  position: absolute;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  top: 0;\n  left: 0;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  z-index: -1;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: transform 1s;\n  transform: translate3d(0px, 0px, 0px);\n}\n#_trackpad_toast.active {\n  transform: translate3d(-135px, 0px, 0px);\n}\n", ""]);
+exports.push([module.i, "#_touchpad {\n  cursor: pointer;\n  z-index: 999998;\n  position: fixed;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  bottom: 10px;\n  right: 10px;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  font-size: 12px;\n  background-color: #74bac7;\n}\n#_touchpad_tips {\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  bottom: 10px;\n  right: 10px;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  font-size: 12px;\n  background-color: #74bac7;\n}\n#_touchpad_qrcode {\n  position: absolute;\n  top: -140px;\n  left: 0px;\n  width: 128px;\n  height: 128px;\n  background-color: #fff;\n}\n#_touchpad_toast {\n  position: absolute;\n  display: flex;\n  justify-content: center;\n  align-items: center;\n  top: 0;\n  left: 0;\n  width: 128px;\n  height: 40px;\n  border-radius: 5px;\n  color: #fff;\n  z-index: -1;\n  background-color: rgba(0, 0, 0, 0.5);\n  transition: transform 1s;\n  transform: translate3d(0px, 0px, 0px);\n}\n#_touchpad_toast.active {\n  transform: translate3d(-135px, 0px, 0px);\n}\n", ""]);
 
 
 
@@ -2105,7 +2105,7 @@ exports.push([module.i, "#_trackpad {\n  cursor: pointer;\n  z-index: 999998;\n 
 
 exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js")(false);
 // Module
-exports.push([module.i, "#_trackpad_pointer {\n  z-index: 999999;\n  position: fixed;\n  width: 11px;\n  height: 17px;\n  left: 0px;\n  top: 0px;\n  transition: transform 0.1s;\n  transform: translate3d(0px, 0px, 0);\n  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAARBAMAAAD5z0voAAAAMFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///9agToZAAAADnRSTlMADDx3JLOnYDAYm4NrSMnfdYcAAABcSURBVAjXY+CfyAAC/z4JgKn3imDqHZALooBcEAXkgiggF0SBuGDqvQKI+v+tAKjv3dfFQN7Xf+9PCDD4Z/97b8LAIFTU/+6vAAPjRPl3nx2A5rD8DwZRjMpGAgBjcjVBzNw01wAAAABJRU5ErkJggg==);\n}\n", ""]);
+exports.push([module.i, "#_touchpad_pointer {\n  z-index: 999999;\n  position: fixed;\n  width: 11px;\n  height: 17px;\n  left: 0px;\n  top: 0px;\n  transition: transform 0.1s;\n  transform: translate3d(0px, 0px, 0);\n  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAARBAMAAAD5z0voAAAAMFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD///9agToZAAAADnRSTlMADDx3JLOnYDAYm4NrSMnfdYcAAABcSURBVAjXY+CfyAAC/z4JgKn3imDqHZALooBcEAXkgiggF0SBuGDqvQKI+v+tAKjv3dfFQN7Xf+9PCDD4Z/97b8LAIFTU/+6vAAPjRPl3nx2A5rD8DwZRjMpGAgBjcjVBzNw01wAAAABJRU5ErkJggg==);\n}\n", ""]);
 
 
 
@@ -6370,12 +6370,12 @@ module.exports = g;
 /*!*******************************!*\
   !*** ./src/listener/index.js ***!
   \*******************************/
-/*! exports provided: Touchbar */
+/*! exports provided: Touchpad */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Touchbar", function() { return Touchbar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Touchpad", function() { return Touchpad; });
 /* harmony import */ var _src_components_pointer___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./src/components/pointer/ */ "./src/listener/src/components/pointer/index.js");
 /* harmony import */ var _src_modules_scroller__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./src/modules/scroller */ "./src/listener/src/modules/scroller.js");
 /* harmony import */ var _src_components_board___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./src/components/board/ */ "./src/listener/src/components/board/index.js");
@@ -6385,25 +6385,30 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-class Touchbar {
+class Touchpad {
   /**
    * 构造函数
    * @param {Object} config 
-   * config.gesture {boolean} false
+   * config.trackType {boolean} false
    */
   constructor(config = {}) {
     this.url = config.host || `${window.location.protocol}${window.location.host}`;
-    this.gesture = config.gesture || false;
+    this.trackType = config.trackType || 'mouse';
     this.pointer = new _src_components_pointer___WEBPACK_IMPORTED_MODULE_0__["default"]();
     this.scroller = new _src_modules_scroller__WEBPACK_IMPORTED_MODULE_1__["default"]();
     this.board = new _src_components_board___WEBPACK_IMPORTED_MODULE_2__["default"]();
     const wsurl = document.location.protocol === 'https:' ? `wss://${this.url}/listener` : `ws://${this.url}/listener`;
-    const server = new _src_modules_server__WEBPACK_IMPORTED_MODULE_3__["default"](wsurl);
-    server.init(wsurl).then(res => {
+    const server = new _src_modules_server__WEBPACK_IMPORTED_MODULE_3__["default"]({
+      url: wsurl,
+      trackType: this.trackType
+    });
+    server.init().then(res => {
       if (res) {
         this.board.initQrcode(`${window.location.protocol}//${window.location.host}/pad.html?ws=${this.url}&co=${res.data}`);
       }
     });
+    this.listenType = [];
+    this.listenCb = null;
     this.board.clickHandler(() => {
       if (server.work) {
         if (this.board._qrcode.style.display === 'none') {
@@ -6427,9 +6432,11 @@ class Touchbar {
         if (msg.track.action === "click") {
           this.pointer.click();
         }
-      }
 
-      if (msg.type === 'msg') {
+        if (msg.track.action === 'switch') {
+          msg.track.data === 'mouse' ? this.pointer.show() : this.pointer.hide();
+        }
+      } else if (msg.type === 'msg') {
         if (msg.action === 'join') {
           this.board.toast('新建立连接');
           this.board.setQrcodeVisible(false);
@@ -6444,6 +6451,10 @@ class Touchbar {
           this.pointer.hide();
         }
       }
+
+      if (msg.type === 'track' && this.listenType.indexOf(msg.track.action) !== -1) {
+        this.listenCb && this.listenCb(msg);
+      }
     });
     server.errorHandler(err => {
       this.board.toast('失去连接');
@@ -6457,6 +6468,11 @@ class Touchbar {
       this.board.tips('点击重连');
       this.pointer.hide();
     });
+  }
+
+  listen(type, cb) {
+    this.listenType = type;
+    this.listenCb = cb;
   }
 
 }
@@ -6490,9 +6506,9 @@ class Boarder {
   constructor() {
     this.dom = Object(_modules_tools__WEBPACK_IMPORTED_MODULE_1__["str2dom"])(_template_html__WEBPACK_IMPORTED_MODULE_3___default.a);
     document.getElementsByTagName('body')[0].appendChild(this.dom);
-    this._tips = document.getElementById('_trackpad_tips');
-    this._qrcode = document.getElementById('_trackpad_qrcode');
-    this._toast = document.getElementById('_trackpad_toast');
+    this._tips = document.getElementById('_touchpad_tips');
+    this._qrcode = document.getElementById('_touchpad_qrcode');
+    this._toast = document.getElementById('_touchpad_toast');
     this._qrcodeready = false;
     this.dom.onclick = this._onclick.bind(this);
   }
@@ -6591,7 +6607,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"_trackpad\">\n  <div id=\"_trackpad_tips\">未连接</div>\n  <img id=\"_trackpad_qrcode\">\n  <div id=\"_trackpad_toast\"></div>\n</div>";
+module.exports = "<div id=\"_touchpad\">\n  <div id=\"_touchpad_tips\">未连接</div>\n  <img id=\"_touchpad_qrcode\">\n  <div id=\"_touchpad_toast\"></div>\n</div>";
 
 /***/ }),
 
@@ -6669,7 +6685,6 @@ class Pointer {
       }
     }
 
-    console.log(x, y);
     this.pointerX += x;
     this.pointerY += y;
 
@@ -6744,7 +6759,7 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"_trackpad_pointer\" style=\"display: none;\"></div>";
+module.exports = "<div id=\"_touchpad_pointer\" style=\"display: none;\"></div>";
 
 /***/ }),
 
@@ -6760,10 +6775,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Scroller; });
 class Scroller {
   set(y) {
-    console.log(y);
     let height = document.body.scrollTop || document.documentElement.scrollTop;
     height -= Math.round(y * 3);
-    console.log(height);
     document.body.scrollTop = document.documentElement.scrollTop = height;
   }
 
@@ -6782,35 +6795,35 @@ class Scroller {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Server; });
 class Server {
-  constructor() {
+  constructor(config) {
     this.work = false;
+    this.url = config.url;
+    this.trackType = config.trackType;
+    this.ws = null;
   }
 
-  async init(url) {
-    this.url = url;
-    let connect = await this._connect(this.url).catch();
+  async init() {
+    let connect = await this.connect(this.url).catch();
 
     if (!connect) {
       console.log(`[${code}]发起连接失败`);
       return;
     }
 
-    this.ws.onmessage = this._onmessage.bind(this);
-    this.ws.onerror = this._onerror.bind(this);
-    this.ws.onclose = this._onclose.bind(this);
-    console.log(this.code);
-    let register = await this._register().catch();
+    this.ws.onmessage = this.onmessage.bind(this);
+    this.ws.onerror = this.onerror.bind(this);
+    this.ws.onclose = this.onclose.bind(this);
+    let register = await this.register().catch();
 
     if (!register) {
       console.log(`[${code}]发起注册失败`);
       return;
     }
 
-    console.log(register);
     return register;
   }
 
-  _connect(url) {
+  connect(url) {
     return new Promise((resolve, reject) => {
       this.ws = new WebSocket(url);
       this.ws.addEventListener("open", () => {
@@ -6819,14 +6832,12 @@ class Server {
     });
   }
 
-  _register() {
+  register() {
     return new Promise((resolve, reject) => {
-      this._registerCallback = msg => {
-        this._registerCallback = null;
-        console.log(msg);
+      this.registerCallback = msg => {
+        this.registerCallback = null;
 
         if (msg.type === 'answer' && msg.action === 'init') {
-          console.log('接收到');
           this.work = true;
           resolve(msg);
         } else {
@@ -6836,22 +6847,27 @@ class Server {
 
       this.send({
         type: "operate",
-        action: "init"
+        action: "init",
+        data: {
+          trackType: this.trackType
+        }
       });
     });
   }
 
-  _onerror() {
-    this.work = false; // TODO show Toast
+  onerror() {
+    this.work = false;
+    this._errorCallback && this._errorCallback();
   }
 
-  _onclose() {
-    this.work = false; // TODO show Toast
+  onclose() {
+    this.work = false;
+    this._closeCallback && this._closeCallback();
   }
 
-  _onmessage(message) {
+  onmessage(message) {
     const msg = JSON.parse(message.data);
-    this._registerCallback && this._registerCallback(msg);
+    this.registerCallback && this.registerCallback(msg);
     this._messageCallback && this._messageCallback(msg);
   }
 
