@@ -26,13 +26,7 @@
 
 ### 效果
 
-一图胜千言
-
-![鼠标](http://cdn.niamoi.com/gif/touchpad/mouse.gif)
-
-![滚动](http://cdn.niamoi.com/gif/touchpad/scroll.gif)
-
-![手势](http://cdn.niamoi.com/gif/touchpad/gesture.gif)
+[demo](https://niamoi.com/touchpad/)
 
 ### 开始
 
